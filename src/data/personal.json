@@ -1,0 +1,29 @@
+{
+  "name": "Shengxin Xiao",
+  "nameZh": "肖圣鑫",
+  "title": "Undergraduate Student at Wuhan University",
+  "titleZh": "武汉大学本科生",
+  "bio": "Passionate student researcher in Information and Computing Science, with a focus on multimodal document understanding and mathematical reasoning agents.",
+  "bioZh": "信息与计算科学专业在读本科生，专注于多模态文档理解和数学推理智能体研究。",
+  "education": {
+    "university": "Wuhan University",
+    "universityZh": "武汉大学",
+    "college": "School of Mathematics and Statistics",
+    "collegeZh": "数学与统计学院",
+    "major": "Information and Computing Science (Ziqiang Class)",
+    "majorZh": "信息与计算科学(自强班)",
+    "degree": "Bachelor of Science",
+    "degreeZh": "理学学士",
+    "gpa": "3.93/4.0",
+    "period": "Sep 2024 - Jun 2028 (Expected)",
+    "periodZh": "2024.9 - 2028.6 (预计)",
+    "courses": ["Mathematical Analysis", "Advanced Algebra", "Probability Theory", "Numerical Linear Algebra", "Mathematical Statistics"],
+    "coursesZh": ["数学分析", "高等代数", "概率论", "数值线性代数", "数理统计"]
+  },
+  "contact": {
+    "email": "sxshaw593730@163.com",
+    "phone": "+86 136-8029-0292",
+    "wechat": "13680290292",
+    "github": "Leionel"
+  }
+}

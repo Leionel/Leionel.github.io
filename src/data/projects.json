@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Multimodal Document Understanding & Structural Parsing",
+    "nameZh": "多模态文档理解与结构化解析",
+    "role": "Core Member",
+    "roleZh": "核心队员",
+    "period": "Sep 2025 - Present",
+    "periodZh": "2025.9 - 至今",
+    "type": "Innovative Training Program",
+    "typeZh": "大创项目",
+    "description": "Designed and implemented an end-to-end document parsing system with batch processing, checkpointing, and exception retry, improving stability and reproducibility.",
+    "descriptionZh": "设计并实现文档解析端到端系统，支持批量处理、断点续跑及异常重试，提升任务执行稳定性与可复现性。",
+    "details": [
+      "Optimized GPU inference environments (CUDA/dependency conflict resolution), significantly increasing parsing efficiency.",
+      "Built data cleaning and synthetic enhancement pipelines for improved model robustness in complex layouts.",
+      "Implemented a complete evaluation loop with metrics monitoring (mAP/F1/BLEU/TEDS) for continuous optimization."
+    ],
+    "detailsZh": [
+      "优化 GPU 推理环境（CUDA/依赖冲突排查），显著提升解析效率并降低运行失败率。",
+      "构建数据清洗与合成增强管道，提升模型在复杂版式与噪声文档场景下的鲁棒性。",
+      "实现评测闭环与指标监控，支持多指标（mAP/F1/BLEU/TEDS）自动化评估与持续优化。"
+    ],
+    "tags": ["Document Parsing", "Multimodal", "GPU Optimization", "CUDA", "Evaluation"]
+  },
+  {
+    "id": 2,
+    "name": "Luojia Digital Math Assistant",
+    "nameZh": "珞珈数智助教",
+    "role": "Leader & Principal Investigator",
+    "roleZh": "队长 & 负责人",
+    "period": "Nov 2025 - Present",
+    "periodZh": "2025.11 - 至今",
+    "type": "Intelligent Agent System Research (University Level Competition)",
+    "typeZh": "智能体系统研发项目 (校级竞赛)",
+    "description": "A multimodal math reasoning agent based on RAG and Tool-Calling for Higher Mathematics and Linear Algebra.",
+    "descriptionZh": "基于 RAG 与工具调用的多模态数学推理智能体，支持高等数学与线性代数的教学与解题。",
+    "details": [
+      "Built a low-code teaching agent supporting text and image input, integrating OCR, knowledge base retrieval (RAG), and Python tool calling.",
+      "Designed an 'Intent Recognition - Tool Call - Result Verification' workflow using SymPy/NumPy for calculation validation and visualization.",
+      "Collaborated on building a specialized math knowledge base and evaluation dataset from textbooks and open-source data."
+    ],
+    "detailsZh": [
+      "基于低代码平台搭建面向高等数学/线性代数的教学智能体，支持文本与图片输入，集成 OCR、知识库检索 (RAG) 与 Python 工具调用。",
+      "设计 “意图识别—工具调用—结果验证” 的智能体工作流，结合 SymPy/NumPy 完成计算验证与可视化，提升复杂数学问题求解的可靠性。",
+      "参与构建数学领域知识库与评测数据集（教材+开源数据），完成数据清洗、结构化处理与检索优化。"
+    ],
+    "tags": ["RAG", "Intelligent Agent", "Mathematical Reasoning", "OCR", "Tool-Calling", "SymPy"]
+  }
+]

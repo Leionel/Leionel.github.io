@@ -1,0 +1,40 @@
+[
+  {
+    "category": "Core Tech Stack",
+    "categoryZh": "核心技术栈",
+    "skills": [
+      {"name": "Python (Pandas/NumPy)", "level": 90},
+      {"name": "PyTorch", "level": 80},
+      {"name": "Hugging Face Ecosystem", "level": 85},
+      {"name": "Transformer Architectures", "level": 80},
+      {"name": "Model Fine-tuning (LoRA/PEFT)", "level": 75}
+    ]
+  },
+  {
+    "category": "Math & Algorithms",
+    "categoryZh": "数理算法",
+    "skills": [
+      {"name": "Matrix Theory", "level": 95},
+      {"name": "Probability & Statistics", "level": 95},
+      {"name": "Machine Learning Algorithms", "level": 85},
+      {"name": "Deep Learning Algorithms", "level": 75}
+    ]
+  },
+  {
+    "category": "Engineering & Tools",
+    "categoryZh": "工程与工具",
+    "skills": [
+      {"name": "Git Collaboration", "level": 85},
+      {"name": "Anaconda & CUDA/GPU Environment", "level": 90},
+      {"name": "Matplotlib Data Visualization", "level": 85}
+    ]
+  },
+  {
+    "category": "Language & Others",
+    "categoryZh": "语言技能及其他",
+    "skills": [
+      {"name": "English (CET-6 613)", "level": 90},
+      {"name": "Technical Document Reading", "level": 95}
+    ]
+  }
+]

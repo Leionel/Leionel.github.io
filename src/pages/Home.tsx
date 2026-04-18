@@ -1,0 +1,115 @@
+import personalData from '../data/personal.json';
+import skillsData from '../data/skills.json';
+import { ArrowRight, Download, Brain, Code, Cpu } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const Home = () => {
+  const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`;
+
+  return (
+    <div className="space-y-24">
+      <section className="flex flex-col md:flex-row items-center justify-between py-12 md:py-20 gap-12">
+        <div className="flex-1 space-y-6 text-center md:text-left">
+          <div className="inline-block px-4 py-1 rounded-full bg-blue-500/10 text-blue-400 text-sm font-medium mb-4">
+            Hello, I'm {personalData.nameZh}
+          </div>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+            Building the <span className="text-blue-500">Future</span> of AI & Math.
+          </h1>
+          <p className="text-slate-400 text-lg md:text-xl max-w-2xl">
+            {personalData.bio}
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
+            <Link
+              to="/projects"
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all flex items-center space-x-2"
+            >
+              <span>View Projects</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/contact"
+              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg transition-all"
+            >
+              Contact Me
+            </Link>
+            <a
+              href={resumeUrl}
+              className="px-6 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-white font-semibold rounded-lg transition-all flex items-center space-x-2"
+              download
+            >
+              <Download className="w-4 h-4" />
+              <span>Resume</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="flex-1 relative flex justify-center">
+          <div className="w-64 h-64 md:w-80 md:h-80 bg-blue-500/20 rounded-full blur-3xl absolute -z-10 animate-pulse"></div>
+          <div className="w-64 h-64 md:w-80 md:h-80 border-2 border-blue-500/30 rounded-3xl overflow-hidden p-4 relative group">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent pointer-events-none group-hover:from-blue-500/40 transition-colors"></div>
+            <div className="w-full h-full bg-slate-900 rounded-2xl flex flex-col items-center justify-center p-8 text-center space-y-4">
+              <div className="p-4 bg-blue-500/10 rounded-full">
+                <Brain className="w-12 h-12 text-blue-500" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white">{personalData.name}</h3>
+                <p className="text-slate-500 text-sm">{personalData.education.university}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {[
+          { icon: <Brain className="w-8 h-8 text-blue-500" />, title: 'Math Expert', desc: 'First Prize in National Math Competition.' },
+          { icon: <Code className="w-8 h-8 text-blue-500" />, title: 'AI Developer', desc: 'Focus on RAG and LLM Agent systems.' },
+          { icon: <Cpu className="w-8 h-8 text-blue-500" />, title: 'Research Focused', desc: 'Core member of innovative training programs.' },
+        ].map((item, i) => (
+          <div key={i} className="p-8 rounded-2xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 transition-colors group">
+            <div className="mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
+            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </section>
+
+      <section className="space-y-8">
+        <div className="text-center max-w-2xl mx-auto space-y-4">
+          <h2 className="text-3xl font-bold text-white">Core Skills</h2>
+          <p className="text-slate-400">A blend of mathematical theory and engineering practice.</p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3">
+          {skillsData[0].skills.concat(skillsData[1].skills).map((skill, i) => (
+            <span
+              key={i}
+              className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-full text-slate-300 text-sm hover:text-white hover:border-blue-500/50 transition-all cursor-default"
+            >
+              {skill.name}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section className="p-12 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 text-center space-y-6 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+        <h2 className="text-3xl md:text-4xl font-bold text-white relative z-10">Interested in Collaboration?</h2>
+        <p className="text-blue-100 text-lg relative z-10 max-w-xl mx-auto">
+          Let's talk about AI, Math, or interesting research opportunities.
+        </p>
+        <div className="pt-4 relative z-10">
+          <Link
+            to="/contact"
+            className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:shadow-xl transition-all inline-block"
+          >
+            Get In Touch
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;

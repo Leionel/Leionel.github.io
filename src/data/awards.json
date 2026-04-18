@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "2024/2025 National Undergraduate Mathematics Competition (CMC)",
+    "nameZh": "2024/2025年全国大学生数学竞赛",
+    "award": "First Prize, Hubei Province",
+    "awardZh": "湖北赛区 省级一等奖",
+    "date": "Dec 2024/Dec 2025",
+    "dateZh": "2024.12/2025.12"
+  },
+  {
+    "id": 2,
+    "name": "2025 National Undergraduate Mathematical Modeling Competition (CUMCM)",
+    "nameZh": "2025年全国大学生数学建模竞赛",
+    "award": "Second Prize, Hubei Province",
+    "awardZh": "湖北赛区 省级二等奖",
+    "date": "Nov 2025",
+    "dateZh": "2025.11"
+  }
+]
