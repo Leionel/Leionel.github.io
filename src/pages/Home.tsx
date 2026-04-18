@@ -56,7 +56,7 @@ const Home = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-secondary-500/20 pointer-events-none group-hover:from-primary-500/40 group-hover:to-secondary-500/40 transition-colors"></div>
             <div className="w-full h-full bg-slate-900 rounded-2xl flex flex-col items-center justify-center p-8 text-center space-y-4">
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-primary-500/30">
-                <img src="https://picsum.photos/seed/personal-photo/200/200.jpg" alt="Personal Photo" className="w-full h-full object-cover" />
+                <img src="./我的照片.jpg" alt="Personal Photo" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white">{personalData.name}</h3>

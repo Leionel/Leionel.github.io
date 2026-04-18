@@ -1,5 +1,6 @@
 import { ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
+import projectsData from '../data/projects.json';
 
 const Exploration = () => {
   const { isZh } = useLanguage();
@@ -65,14 +66,17 @@ const Exploration = () => {
         <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 hover:border-primary-500/50 transition-colors">
           <h2 className="text-2xl font-bold text-white mb-6">{isZh ? '项目' : 'Projects'}</h2>
           <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <ChevronRight className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
-              <span className="text-slate-300">多模态文档理解系统</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <ChevronRight className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
-              <span className="text-slate-300">数学智能体系统</span>
-            </div>
+            {projectsData.map((project) => (
+              <div key={project.id} className="flex items-start gap-3">
+                <ChevronRight className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-slate-300 font-medium">{isZh ? project.nameZh : project.name}</span>
+                  <div className="text-slate-500 text-sm mt-1">
+                    {isZh ? project.typeZh : project.type} • {isZh ? project.periodZh : project.period}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
