@@ -1,5 +1,5 @@
 import projectsData from '../data/projects.json';
-import { Calendar, Briefcase, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
 
 const Projects = () => {
@@ -14,62 +14,64 @@ const Projects = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-12">
-        {projectsData.map((project) => (
-          <article
-            key={project.id}
-            className="p-8 md:p-12 rounded-3xl bg-slate-900 border border-slate-800 hover:border-blue-500/50 transition-all group overflow-hidden relative"
-          >
-            <div className="absolute top-0 right-0 p-8 text-slate-800 group-hover:text-blue-500/10 transition-colors -z-10">
-              <Briefcase className="w-32 h-32" />
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-12 items-start">
-              <div className="flex-1 space-y-8">
-                <div className="space-y-4">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20">
-                      {isZh ? project.typeZh : project.type}
-                    </span>
-                    <div className="flex items-center gap-2 text-slate-500 text-sm">
-                      <Calendar className="w-4 h-4" />
-                      <span>{isZh ? project.periodZh : project.period}</span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* 项目模块 */}
+        <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 hover:border-primary-500/50 transition-colors">
+          <h2 className="text-2xl font-bold text-white mb-6">{isZh ? '项目' : 'Projects'}</h2>
+          <div className="space-y-4">
+            {projectsData.map((project) => (
+              <div key={project.id} className="border border-slate-800 rounded-xl p-4 hover:border-primary-500/50 transition-colors">
+                <div className="flex items-start gap-3">
+                  <ChevronRight className="w-5 h-5 text-primary-500 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-medium">{isZh ? project.nameZh : project.name}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="px-2 py-1 bg-primary-500/10 text-primary-400 text-xs rounded-full">
+                        {isZh ? project.typeZh : project.type}
+                      </span>
+                      <span className="text-slate-500 text-sm">
+                        {isZh ? project.periodZh : project.period}
+                      </span>
+                    </div>
+                    <p className="text-slate-400 text-sm mt-2 leading-relaxed">
+                      {isZh ? project.descriptionZh : project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {project.tags.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 bg-slate-800 border border-slate-700 text-slate-400 text-xs rounded-md hover:border-primary-500/30 transition-colors"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                    {isZh ? project.nameZh : project.name}
-                  </h2>
-                  <p className="text-slate-400 leading-relaxed italic border-l-4 border-slate-800 pl-4 py-2">
-                    {isZh ? project.descriptionZh : project.description}
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">{isZh ? '核心贡献' : 'Key Contributions'}</h3>
-                  <ul className="space-y-3">
-                    {(isZh ? project.detailsZh : project.details).map((detail, i) => (
-                      <li key={i} className="flex items-start gap-3 text-slate-300">
-                        <ChevronRight className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-4">
-                  {project.tags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 bg-slate-800 border border-slate-700 text-slate-400 text-xs font-medium rounded-md group-hover:border-blue-500/30 transition-colors"
-                    >
-                      {tag}
-                    </span>
-                  ))}
                 </div>
               </div>
-            </div>
-          </article>
-        ))}
+            ))}
+          </div>
+        </div>
+
+        {/* 核心贡献模块 */}
+        <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 hover:border-primary-500/50 transition-colors">
+          <h2 className="text-2xl font-bold text-white mb-6">{isZh ? '核心贡献' : 'Key Contributions'}</h2>
+          <div className="space-y-4">
+            {projectsData.map((project) => (
+              <div key={project.id}>
+                <h4 className="text-white font-medium mb-2">{isZh ? project.nameZh : project.name}</h4>
+                <ul className="space-y-2">
+                  {(isZh ? project.detailsZh : project.details).map((detail, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-300 text-sm">
+                      <ChevronRight className="w-4 h-4 text-primary-500 flex-shrink-0 mt-0.5" />
+                      <span>{detail}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
