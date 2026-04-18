@@ -1,57 +1,39 @@
-# React + TypeScript + Vite
+# 个人网站（Leionel.github.io）
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+个人作品集网站，基于 Vite + React + TypeScript + Tailwind CSS 构建，部署在 GitHub Pages。
 
-Currently, two official plugins are available:
+- 在线访问：https://leionel.github.io/
+- 仓库地址：https://github.com/Leionel/Leionel.github.io
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 功能
 
-## Expanding the ESLint configuration
+- 首页 / 关于我 / 项目 / 技能 / 奖项 / 联系方式
+- 顶部导航栏与移动端菜单
+- 中英文切换（导航与页面内容同步切换）
+- 简历下载（`public/resume.pdf`）
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 本地开发
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+安装依赖：
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+启动开发服务器：
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm run dev
 ```
+
+构建产物：
+
+```bash
+npm run build
+```
+
+## 部署到 GitHub Pages
+
+本项目使用 GitHub Actions 自动部署：push 到 `main` 后自动构建并发布。
+
+详见部署文档：[DEPLOYMENT.md](file:///d:/personalweb/DEPLOYMENT.md)
