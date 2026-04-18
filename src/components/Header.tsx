@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, User, Briefcase, Award, Mail, Menu, X, Terminal } from 'lucide-react';
+import { Home, User, Briefcase, Award, Mail, Menu, X, Terminal, Sun, Moon } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
+import { useTheme } from '../hooks/useTheme';
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const location = useLocation();
   const { isZh, toggleLanguage } = useLanguage();
+  const { theme, toggleTheme, isDark } = useTheme();
 
   const navLinks = [
     { name: isZh ? '首页' : 'Home', path: '/', icon: <Home className="w-4 h-4" /> },
@@ -45,6 +47,12 @@ const Header = () => {
               </Link>
             ))}
             <button
+              onClick={toggleTheme}
+              className="px-3 py-2 rounded-md text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button
               onClick={toggleLanguage}
               className="px-3 py-2 rounded-md text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
             >
@@ -53,6 +61,12 @@ const Header = () => {
           </nav>
 
           <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="px-3 py-2 rounded-md text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <button
               onClick={toggleLanguage}
               className="px-3 py-2 rounded-md text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
@@ -87,6 +101,12 @@ const Header = () => {
                 <span>{link.name}</span>
               </Link>
             ))}
+            <button
+              onClick={toggleTheme}
+              className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
           </div>
         </div>
       )}
