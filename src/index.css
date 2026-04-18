@@ -6,6 +6,14 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  color: #e2e8f0;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(16, 185, 129, 0.14), transparent 35%),
+    radial-gradient(circle at 85% 20%, rgba(245, 158, 11, 0.1), transparent 30%),
+    #020617;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 #root {

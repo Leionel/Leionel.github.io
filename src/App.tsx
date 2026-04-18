@@ -2,7 +2,6 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
-import Projects from './pages/Projects';
 import Exploration from './pages/Exploration';
 import Awards from './pages/Awards';
 import Skills from './pages/Skills';
@@ -17,8 +16,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-        <Route path="/exploration" element={<Exploration />} />
+            <Route path="/projects" element={<Exploration />} />
+            <Route path="/exploration" element={<Exploration />} />
             <Route path="/awards" element={<Awards />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/contact" element={<Contact />} />
