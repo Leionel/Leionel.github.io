@@ -1,13 +1,16 @@
 import projectsData from '../data/projects.json';
 import { Calendar, Briefcase, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../contexts/language';
 
 const Projects = () => {
+  const { isZh } = useLanguage();
+
   return (
     <div className="max-w-6xl mx-auto space-y-16">
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <h1 className="text-4xl font-bold text-white tracking-tight">Project Portfolio</h1>
+        <h1 className="text-4xl font-bold text-white tracking-tight">{isZh ? '项目经历' : 'Project Portfolio'}</h1>
         <p className="text-slate-400 text-lg">
-          Showcasing my research and engineering work in Multimodal AI and Document Understanding.
+          {isZh ? '展示我在多模态 AI 与文档理解方向的研究与工程实践。' : 'Showcasing my research and engineering work in Multimodal AI and Document Understanding.'}
         </p>
       </div>
 
@@ -26,25 +29,25 @@ const Projects = () => {
                 <div className="space-y-4">
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 rounded-full border border-blue-500/20">
-                      {project.type}
+                      {isZh ? project.typeZh : project.type}
                     </span>
                     <div className="flex items-center gap-2 text-slate-500 text-sm">
                       <Calendar className="w-4 h-4" />
-                      <span>{project.period}</span>
+                      <span>{isZh ? project.periodZh : project.period}</span>
                     </div>
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                    {project.name}
+                    {isZh ? project.nameZh : project.name}
                   </h2>
                   <p className="text-slate-400 leading-relaxed italic border-l-4 border-slate-800 pl-4 py-2">
-                    {project.description}
+                    {isZh ? project.descriptionZh : project.description}
                   </p>
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">Key Contributions</h3>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500">{isZh ? '核心贡献' : 'Key Contributions'}</h3>
                   <ul className="space-y-3">
-                    {project.details.map((detail, i) => (
+                    {(isZh ? project.detailsZh : project.details).map((detail, i) => (
                       <li key={i} className="flex items-start gap-3 text-slate-300">
                         <ChevronRight className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
                         <span>{detail}</span>

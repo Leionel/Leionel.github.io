@@ -1,7 +1,10 @@
 import skillsData from '../data/skills.json';
 import { Terminal, Brain, Settings, Globe, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../contexts/language';
 
 const Skills = () => {
+  const { isZh } = useLanguage();
+
   const getIcon = (category: string) => {
     switch (category) {
       case 'Core Tech Stack':
@@ -20,9 +23,9 @@ const Skills = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-16">
       <div className="text-center max-w-2xl mx-auto space-y-4">
-        <h1 className="text-4xl font-bold text-white tracking-tight">Technical Skills</h1>
+        <h1 className="text-4xl font-bold text-white tracking-tight">{isZh ? '技术能力' : 'Technical Skills'}</h1>
         <p className="text-slate-400 text-lg">
-          My expertise spans mathematical theory, deep learning engineering, and software development.
+          {isZh ? '我的能力覆盖数理基础、深度学习工程和软件开发。' : 'My expertise spans mathematical theory, deep learning engineering, and software development.'}
         </p>
       </div>
 
@@ -33,7 +36,7 @@ const Skills = () => {
               <div className="p-3 bg-blue-500/10 rounded-2xl">
                 {getIcon(category.category)}
               </div>
-              <h2 className="text-2xl font-bold text-white">{category.category}</h2>
+              <h2 className="text-2xl font-bold text-white">{isZh ? category.categoryZh : category.category}</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -60,8 +63,12 @@ const Skills = () => {
       </div>
 
       <div className="p-12 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-4">
-        <h2 className="text-2xl font-bold text-white italic">"Math is the logic of science; code is its manifestation."</h2>
-        <p className="text-slate-500">Continuously learning and exploring new frontiers in AI research.</p>
+        <h2 className="text-2xl font-bold text-white italic">
+          {isZh ? '“数学是科学的逻辑，代码是它的表达。”' : '"Math is the logic of science; code is its manifestation."'}
+        </h2>
+        <p className="text-slate-500">
+          {isZh ? '持续学习，探索 AI 研究的新边界。' : 'Continuously learning and exploring new frontiers in AI research.'}
+        </p>
       </div>
     </div>
   );

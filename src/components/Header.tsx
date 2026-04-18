@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, User, Briefcase, Award, Mail, Menu, X, Terminal } from 'lucide-react';
+import { useLanguage } from '../contexts/language';
 
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const location = useLocation();
+  const { isZh, toggleLanguage } = useLanguage();
 
   const navLinks = [
-    { name: 'Home', path: '/', icon: <Home className="w-4 h-4" /> },
-    { name: 'About', path: '/about', icon: <User className="w-4 h-4" /> },
-    { name: 'Projects', path: '/projects', icon: <Briefcase className="w-4 h-4" /> },
-    { name: 'Skills', path: '/skills', icon: <Terminal className="w-4 h-4" /> },
-    { name: 'Awards', path: '/awards', icon: <Award className="w-4 h-4" /> },
-    { name: 'Contact', path: '/contact', icon: <Mail className="w-4 h-4" /> },
+    { name: isZh ? '首页' : 'Home', path: '/', icon: <Home className="w-4 h-4" /> },
+    { name: isZh ? '关于我' : 'About', path: '/about', icon: <User className="w-4 h-4" /> },
+    { name: isZh ? '项目' : 'Projects', path: '/projects', icon: <Briefcase className="w-4 h-4" /> },
+    { name: isZh ? '技能' : 'Skills', path: '/skills', icon: <Terminal className="w-4 h-4" /> },
+    { name: isZh ? '奖项' : 'Awards', path: '/awards', icon: <Award className="w-4 h-4" /> },
+    { name: isZh ? '联系' : 'Contact', path: '/contact', icon: <Mail className="w-4 h-4" /> },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -27,7 +29,7 @@ const Header = () => {
             </Link>
           </div>
 
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -42,9 +44,21 @@ const Header = () => {
                 <span>{link.name}</span>
               </Link>
             ))}
+            <button
+              onClick={toggleLanguage}
+              className="px-3 py-2 rounded-md text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            >
+              {isZh ? 'EN' : '中文'}
+            </button>
           </nav>
 
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleLanguage}
+              className="px-3 py-2 rounded-md text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            >
+              {isZh ? 'EN' : '中'}
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
