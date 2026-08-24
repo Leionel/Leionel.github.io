@@ -1,40 +1,49 @@
 [
   {
-    "category": "Core Tech Stack",
-    "categoryZh": "核心技术栈",
+    "category": "AI & Agents",
+    "categoryZh": "AI 与智能体",
     "skills": [
-      {"name": "Python (Pandas/NumPy)", "level": 90},
-      {"name": "PyTorch", "level": 80},
-      {"name": "Hugging Face Ecosystem", "level": 85},
-      {"name": "Transformer Architectures", "level": 80},
-      {"name": "Model Fine-tuning (LoRA/PEFT)", "level": 75}
+      { "name": "Agent Harness Design", "nameZh": "Agent Harness 设计" },
+      { "name": "Multi-Agent Systems", "nameZh": "多智能体系统" },
+      { "name": "RAG & Knowledge Base", "nameZh": "RAG 与知识库" },
+      { "name": "Tool Calling", "nameZh": "工具调用" },
+      { "name": "Prompt Engineering", "nameZh": "提示工程" },
+      { "name": "LLM App Pipelines", "nameZh": "LLM 应用管线" }
+    ]
+  },
+  {
+    "category": "Languages & Frameworks",
+    "categoryZh": "语言与框架",
+    "skills": [
+      { "name": "Python", "nameZh": "Python" },
+      { "name": "TypeScript", "nameZh": "TypeScript" },
+      { "name": "NumPy / Pandas / SymPy", "nameZh": "NumPy / Pandas / SymPy" },
+      { "name": "React & Next.js", "nameZh": "React & Next.js" },
+      { "name": "Prisma", "nameZh": "Prisma" },
+      { "name": "ArkTS (HarmonyOS)", "nameZh": "ArkTS（鸿蒙）" }
     ]
   },
   {
     "category": "Math & Algorithms",
     "categoryZh": "数理算法",
     "skills": [
-      {"name": "Matrix Theory", "level": 95},
-      {"name": "Probability & Statistics", "level": 95},
-      {"name": "Machine Learning Algorithms", "level": 85},
-      {"name": "Deep Learning Algorithms", "level": 75}
+      { "name": "Mathematical Analysis", "nameZh": "数学分析" },
+      { "name": "Numerical Linear Algebra", "nameZh": "数值线性代数" },
+      { "name": "Probability & Statistics", "nameZh": "概率与统计" },
+      { "name": "Machine Learning", "nameZh": "机器学习" },
+      { "name": "Deep Learning", "nameZh": "深度学习" },
+      { "name": "Mathematical Modeling", "nameZh": "数学建模" }
     ]
   },
   {
-    "category": "Engineering & Tools",
-    "categoryZh": "工程与工具",
+    "category": "Engineering & Others",
+    "categoryZh": "工程与其他",
     "skills": [
-      {"name": "Git Collaboration", "level": 85},
-      {"name": "Anaconda & CUDA/GPU Environment", "level": 90},
-      {"name": "Matplotlib Data Visualization", "level": 85}
-    ]
-  },
-  {
-    "category": "Language & Others",
-    "categoryZh": "语言技能及其他",
-    "skills": [
-      {"name": "English (CET-6 613)", "level": 90},
-      {"name": "Technical Document Reading", "level": 95}
+      { "name": "Git & GitHub", "nameZh": "Git & GitHub" },
+      { "name": "CUDA / GPU Environments", "nameZh": "CUDA / GPU 环境" },
+      { "name": "Matplotlib Visualization", "nameZh": "Matplotlib 可视化" },
+      { "name": "Vite & Tailwind CSS", "nameZh": "Vite & Tailwind CSS" },
+      { "name": "English (CET-6 Passed)", "nameZh": "英语六级（通过）" }
     ]
   }
 ]

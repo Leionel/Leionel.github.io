@@ -76,6 +76,16 @@ const About = () => {
             </div>
 
             <div className="mt-6">
+              <div className="grid gap-4 border-b border-edge pb-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-edge">
+                {personalData.schools.map((s) => (
+                  <div key={s.nameZh} className="sm:px-4 sm:first:pl-0 sm:last:pr-0">
+                    <p className="font-mono text-xs text-ink-faint">{s.period}</p>
+                    <p className="mt-1.5 text-sm font-semibold leading-snug text-ink">{isZh ? s.nameZh : s.name}</p>
+                    <p className="mt-0.5 text-xs text-ink-faint">{isZh ? s.stageZh : s.stage}</p>
+                  </div>
+                ))}
+              </div>
+
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h3 className="text-xl font-semibold tracking-tight text-ink">
                   {isZh ? personalData.education.universityZh : personalData.education.university}

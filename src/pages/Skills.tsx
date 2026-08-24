@@ -1,13 +1,13 @@
-import { Brain, Globe, Settings, Terminal } from 'lucide-react';
+import { Bot, Settings, Sigma, Terminal } from 'lucide-react';
 import skillsData from '../data/skills.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal, Tag } from '../components/ui';
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  'Core Tech Stack': <Terminal className="h-5 w-5" />,
-  'Math & Algorithms': <Brain className="h-5 w-5" />,
-  'Engineering & Tools': <Settings className="h-5 w-5" />,
-  'Language & Others': <Globe className="h-5 w-5" />,
+  'AI & Agents': <Bot className="h-5 w-5" />,
+  'Languages & Frameworks': <Terminal className="h-5 w-5" />,
+  'Math & Algorithms': <Sigma className="h-5 w-5" />,
+  'Engineering & Others': <Settings className="h-5 w-5" />,
 };
 
 const Skills = () => {
@@ -24,8 +24,8 @@ const Skills = () => {
         </h1>
         <p className="mt-4 text-base leading-relaxed text-ink-muted sm:text-lg">
           {isZh
-            ? '数理基础、深度学习工程与开发工具的交叉组合。'
-            : 'The intersection of mathematical foundations, deep-learning engineering, and developer tooling.'}
+            ? '做智能体工程所需的数理基础、框架与工具箱。'
+            : 'The math, frameworks, and tooling behind the agent systems I build.'}
         </p>
       </Reveal>
 
@@ -44,7 +44,7 @@ const Skills = () => {
               <div className="mt-5 flex flex-wrap gap-2">
                 {category.skills.map((s) => (
                   <Tag key={s.name} className="px-3 py-1.5 text-xs">
-                    {s.name}
+                    {isZh ? s.nameZh : s.name}
                   </Tag>
                 ))}
               </div>

@@ -19,6 +19,29 @@
     "courses": ["Mathematical Analysis", "Advanced Algebra", "Probability Theory", "Numerical Linear Algebra", "Mathematical Statistics"],
     "coursesZh": ["数学分析", "高等代数", "概率论", "数值线性代数", "数理统计"]
   },
+  "schools": [
+    {
+      "period": "2012 – 2018",
+      "stage": "Primary School",
+      "stageZh": "小学",
+      "name": "West District Primary School",
+      "nameZh": "中山市西区小学"
+    },
+    {
+      "period": "2018 – 2021",
+      "stage": "Middle School",
+      "stageZh": "初中",
+      "name": "Zhongshan Jiya School",
+      "nameZh": "中山市纪雅学校"
+    },
+    {
+      "period": "2021 – 2024",
+      "stage": "High School",
+      "stageZh": "高中",
+      "name": "Sun Yat-sen Memorial Middle School",
+      "nameZh": "中山市中山纪念中学"
+    }
+  ],
   "contact": {
     "email": "sxshaw593730@163.com",
     "phone": "+86 136-8029-0292",
