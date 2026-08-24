@@ -1,75 +1,71 @@
+import { Brain, Globe, Settings, Terminal } from 'lucide-react';
 import skillsData from '../data/skills.json';
-import { Terminal, Brain, Settings, Globe, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
+import { Reveal, Tag } from '../components/ui';
+
+const categoryIcons: Record<string, React.ReactNode> = {
+  'Core Tech Stack': <Terminal className="h-5 w-5" />,
+  'Math & Algorithms': <Brain className="h-5 w-5" />,
+  'Engineering & Tools': <Settings className="h-5 w-5" />,
+  'Language & Others': <Globe className="h-5 w-5" />,
+};
 
 const Skills = () => {
   const { isZh } = useLanguage();
 
-  const getIcon = (category: string) => {
-    switch (category) {
-      case 'Core Tech Stack':
-        return <Terminal className="w-6 h-6 text-blue-500" />;
-      case 'Math & Algorithms':
-        return <Brain className="w-6 h-6 text-blue-500" />;
-      case 'Engineering & Tools':
-        return <Settings className="w-6 h-6 text-blue-500" />;
-      case 'Language & Others':
-        return <Globe className="w-6 h-6 text-blue-500" />;
-      default:
-        return <Terminal className="w-6 h-6 text-blue-500" />;
-    }
-  };
-
   return (
-    <div className="max-w-4xl mx-auto space-y-16">
-      <div className="text-center max-w-2xl mx-auto space-y-4">
-        <h1 className="text-4xl font-bold text-white tracking-tight">{isZh ? '技术能力' : 'Technical Skills'}</h1>
-        <p className="text-slate-400 text-lg">
-          {isZh ? '我的能力覆盖数理基础、深度学习工程和软件开发。' : 'My expertise spans mathematical theory, deep learning engineering, and software development.'}
+    <div className="space-y-16 md:space-y-24">
+      <Reveal className="max-w-2xl">
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-400">
+          {isZh ? '技能' : 'Skills'}
         </p>
-      </div>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          {isZh ? '技术与能力' : 'Skills & Expertise'}
+        </h1>
+        <p className="mt-4 text-base leading-relaxed text-ink-muted sm:text-lg">
+          {isZh
+            ? '数理基础、深度学习工程与开发工具的交叉组合。'
+            : 'The intersection of mathematical foundations, deep-learning engineering, and developer tooling.'}
+        </p>
+      </Reveal>
 
-      <div className="grid grid-cols-1 gap-12">
+      <div className="grid gap-4 md:grid-cols-2">
         {skillsData.map((category, i) => (
-          <div key={i} className="space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-500/10 rounded-2xl">
-                {getIcon(category.category)}
+          <Reveal key={category.category} delay={i * 70}>
+            <div className="h-full rounded-2xl border border-edge bg-card p-7 transition-colors hover:border-edge-strong sm:p-8">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 text-indigo-500 dark:text-indigo-400">
+                  {categoryIcons[category.category]}
+                </span>
+                <h2 className="text-[17px] font-semibold tracking-tight text-ink">
+                  {isZh ? category.categoryZh : category.category}
+                </h2>
               </div>
-              <h2 className="text-2xl font-bold text-white">{isZh ? category.categoryZh : category.category}</h2>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {category.skills.map((s) => (
+                  <Tag key={s.name} className="px-3 py-1.5 text-xs">
+                    {s.name}
+                  </Tag>
+                ))}
+              </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {category.skills.map((skill, j) => (
-                <div key={j} className="space-y-3">
-                  <div className="flex justify-between items-center px-1">
-                    <span className="text-slate-300 font-medium flex items-center gap-2">
-                      <ChevronRight className="w-4 h-4 text-blue-500" />
-                      {skill.name}
-                    </span>
-                    <span className="text-slate-500 text-xs font-bold">{skill.level}%</span>
-                  </div>
-                  <div className="h-2 w-full bg-slate-900 border border-slate-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-1000 delay-300"
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          </Reveal>
         ))}
       </div>
 
-      <div className="p-12 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-4">
-        <h2 className="text-2xl font-bold text-white italic">
-          {isZh ? '“数学是科学的逻辑，代码是它的表达。”' : '"Math is the logic of science; code is its manifestation."'}
-        </h2>
-        <p className="text-slate-500">
-          {isZh ? '持续学习，探索 AI 研究的新边界。' : 'Continuously learning and exploring new frontiers in AI research.'}
-        </p>
-      </div>
+      <Reveal>
+        <figure className="gradient-border rounded-3xl px-8 py-12 text-center sm:px-16">
+          <blockquote className="relative mx-auto max-w-2xl text-xl font-medium leading-relaxed tracking-tight text-ink sm:text-2xl">
+            <span aria-hidden className="absolute -left-2 -top-6 select-none font-mono text-5xl text-indigo-500/30 sm:-left-8">
+              “
+            </span>
+            {isZh ? '数学是科学的逻辑，代码是它的表达。' : 'Math is the logic of science; code is its manifestation.'}
+          </blockquote>
+          <figcaption className="mt-4 text-sm text-ink-faint">
+            {isZh ? '持续学习，探索 AI 研究的新边界。' : 'Continuously learning, exploring new frontiers in AI research.'}
+          </figcaption>
+        </figure>
+      </Reveal>
     </div>
   );
 };

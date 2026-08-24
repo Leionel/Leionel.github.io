@@ -1,11 +1,12 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
-import Exploration from './pages/Exploration';
+import Projects from './pages/Projects';
 import Awards from './pages/Awards';
 import Skills from './pages/Skills';
 import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 import { LanguageProvider } from './contexts/language';
 
 const App = () => {
@@ -16,11 +17,13 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Exploration />} />
-            <Route path="/exploration" element={<Exploration />} />
+            <Route path="/projects" element={<Projects />} />
+            {/* Legacy path kept as a redirect */}
+            <Route path="/exploration" element={<Navigate to="/projects" replace />} />
             <Route path="/awards" element={<Awards />} />
             <Route path="/skills" element={<Skills />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </Router>

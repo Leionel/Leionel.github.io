@@ -1,125 +1,254 @@
-﻿import { ArrowRight, Download, Brain, Code, Cpu } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Download, Medal, Network, Sigma, Sparkles, Workflow, Database } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import personalData from '../data/personal.json';
-import skillsData from '../data/skills.json';
+import projectsData from '../data/projects.json';
+import directionsData from '../data/directions.json';
 import { useLanguage } from '../contexts/language';
+import { Reveal, SectionHeading, Tag } from '../components/ui';
 import profilePhoto from '../assets/profile-photo.jpg';
+
+const directionIcons: Record<string, React.ReactNode> = {
+  harness: <Workflow className="h-5 w-5" />,
+  'multi-agent': <Network className="h-5 w-5" />,
+  'math-reasoning': <Sigma className="h-5 w-5" />,
+  rag: <Database className="h-5 w-5" />,
+};
 
 const Home = () => {
   const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`;
   const { isZh } = useLanguage();
 
+  const featured = projectsData.slice(0, 3);
+
+  const stats = [
+    { value: isZh ? '3 项' : '3', label: isZh ? '竞赛奖项' : 'Competition awards' },
+    { value: isZh ? '4 个' : '4', label: isZh ? '在研项目' : 'Active projects' },
+    { value: '2028', label: isZh ? '预计毕业' : 'Expected graduation' },
+  ];
+
   return (
-    <div className="space-y-24">
-      <section className="flex flex-col md:flex-row items-center justify-between py-12 md:py-20 gap-12">
-        <div className="flex-1 space-y-6 text-center md:text-left">
-          <div className="inline-block px-4 py-1 rounded-full bg-primary-500/10 text-primary-300 text-sm font-medium mb-4 border border-primary-500/20">
-            {isZh ? `你好，我是 ${personalData.nameZh}` : `Hello, I'm ${personalData.name}`}
-          </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
-            {isZh ? (
-              <>
-                探索 <span className="text-primary-400">AI 与数学</span> 的边界
-              </>
-            ) : (
-              <>
-                Exploring the <span className="text-primary-400">Frontiers</span> of AI & Math.
-              </>
-            )}
-          </h1>
-          <p className="text-slate-300 text-lg md:text-xl max-w-2xl">{isZh ? personalData.bioZh : personalData.bio}</p>
-          <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
-            <Link
-              to="/exploration"
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all flex items-center space-x-2"
-            >
-              <span>{isZh ? '继续探索' : 'Explore More'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/contact"
-              className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg transition-all"
-            >
-              {isZh ? '联系我' : 'Contact Me'}
-            </Link>
-            <a
-              href={resumeUrl}
-              className="px-6 py-3 bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-primary-500/50 text-white font-semibold rounded-lg transition-all flex items-center space-x-2"
-              download
-            >
-              <Download className="w-4 h-4" />
-              <span>{isZh ? '简历' : 'Resume'}</span>
-            </a>
-          </div>
-        </div>
-
-        <div className="flex-1 relative flex justify-center">
-          <div className="w-72 h-72 md:w-96 md:h-96 bg-gradient-to-br from-primary-500/30 to-secondary-500/20 rounded-full blur-3xl absolute -z-10 animate-pulse"></div>
-          <div className="w-72 h-72 md:w-96 md:h-96 border border-primary-500/30 rounded-3xl overflow-hidden p-4 relative group bg-slate-900/80">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-secondary-500/10 pointer-events-none group-hover:from-primary-500/20 group-hover:to-secondary-500/20 transition-colors"></div>
-            <img src={profilePhoto} alt="Personal Photo" className="w-full h-full rounded-2xl object-cover" />
-          </div>
-        </div>
-      </section>
-
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
-          {
-            icon: <Brain className="w-8 h-8 text-primary-400" />,
-            title: isZh ? '数学竞赛能力' : 'Math Expert',
-            desc: isZh ? '在全国数学竞赛中获得一等奖，擅长数学建模和理论分析。' : 'First Prize in National Math Competition.',
-          },
-          {
-            icon: <Code className="w-8 h-8 text-primary-400" />,
-            title: isZh ? 'AI 系统开发' : 'AI Developer',
-            desc: isZh ? '专注 RAG 与 LLM Agent 系统落地。' : 'Focus on RAG and LLM Agent systems.',
-          },
-          {
-            icon: <Cpu className="w-8 h-8 text-primary-400" />,
-            title: isZh ? '科研导向' : 'Research Focused',
-            desc: isZh ? '持续参与创新训练项目，结合工程实践与学术探索。' : 'Core member of innovative training programs.',
-          },
-        ].map((item, i) => (
-          <div key={i} className="p-8 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-primary-500/50 transition-colors group">
-            <div className="mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
-            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-            <p className="text-slate-300 text-sm leading-relaxed">{item.desc}</p>
-          </div>
-        ))}
-      </section>
-
-      <section className="space-y-8">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
-          <h2 className="text-3xl font-bold text-white">{isZh ? '核心技能' : 'Core Skills'}</h2>
-          <p className="text-slate-300">{isZh ? '数学理论与工程实践并重，持续构建跨学科能力。' : 'A blend of mathematical theory and engineering practice.'}</p>
-        </div>
-        <div className="flex flex-wrap justify-center gap-3">
-          {skillsData[0].skills.concat(skillsData[1].skills).map((skill, i) => (
-            <span
-              key={i}
-              className="px-4 py-2 bg-slate-900 border border-slate-700 rounded-full text-slate-200 text-sm hover:text-white hover:border-primary-500/50 transition-all cursor-default"
-            >
-              {skill.name}
+    <div className="space-y-28 md:space-y-36">
+      {/* ------------------------------- Hero ------------------------------ */}
+      <section className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
+        <div className="max-w-2xl">
+          <Reveal>
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-edge bg-card px-4 py-1.5 text-[13px] font-medium text-ink-muted">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              {isZh ? '武汉大学 · 信息与计算科学' : 'Wuhan University · Information & Computing Science'}
             </span>
+          </Reveal>
+
+          <Reveal delay={80}>
+            <h1 className="mt-7 text-[2.6rem] font-bold leading-[1.12] tracking-tight text-ink sm:text-6xl sm:leading-[1.08]">
+              {isZh ? (
+                <>
+                  以数学为基，
+                  <br />
+                  构建<span className="text-gradient">可靠的智能体</span>
+                </>
+              ) : (
+                <>
+                  Building <span className="text-gradient">reliable agents</span>,
+                  <br />
+                  grounded in mathematics.
+                </>
+              )}
+            </h1>
+          </Reveal>
+
+          <Reveal delay={160}>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
+              {isZh ? personalData.bioZh : personalData.bio}
+            </p>
+          </Reveal>
+
+          <Reveal delay={240}>
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Link
+                to="/projects"
+                className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-canvas transition-all hover:opacity-85 hover:shadow-lg hover:shadow-zinc-950/10"
+              >
+                {isZh ? '查看项目' : 'View Projects'}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center rounded-full border border-edge bg-card px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-edge-strong"
+              >
+                {isZh ? '联系我' : 'Contact Me'}
+              </Link>
+              <a
+                href={resumeUrl}
+                download
+                className="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold text-ink-muted transition-colors hover:text-ink"
+              >
+                <Download className="h-4 w-4" />
+                {isZh ? '简历' : 'Resume'}
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={320}>
+            <dl className="mt-12 flex flex-wrap gap-x-10 gap-y-4 border-t border-edge pt-7">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <dt className="sr-only">{s.label}</dt>
+                  <dd className="text-xl font-semibold tracking-tight text-ink">{s.value}</dd>
+                  <dd className="mt-0.5 text-[13px] text-ink-faint">{s.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        </div>
+
+        {/* Photo composition */}
+        <Reveal delay={200} className="relative mx-auto w-full max-w-sm lg:max-w-none">
+          <div className="absolute -inset-8 -z-10 rounded-[40px] bg-gradient-to-br from-indigo-500/15 via-violet-500/10 to-fuchsia-500/10 blur-3xl" />
+          <div className="relative overflow-hidden rounded-[28px] border border-edge shadow-2xl shadow-zinc-950/10">
+            <img
+              src={profilePhoto}
+              alt={isZh ? '肖圣鑫的照片' : 'Photo of Shengxin Xiao'}
+              className="aspect-[4/5] w-full object-cover object-bottom"
+            />
+            <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/10" />
+          </div>
+
+          <div className="animate-float absolute -left-4 top-10 hidden items-center gap-2.5 rounded-2xl border border-edge bg-card/90 py-2.5 pl-3 pr-4 shadow-lg shadow-zinc-950/[0.06] backdrop-blur sm:flex">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
+              <Medal className="h-4 w-4" />
+            </span>
+            <div className="leading-tight">
+              <p className="text-[13px] font-semibold text-ink">{isZh ? '全国数学竞赛' : 'CMC'}</p>
+              <p className="text-xs text-ink-faint">{isZh ? '省级一等奖' : 'First Prize'}</p>
+            </div>
+          </div>
+
+          <div className="animate-float-delayed absolute -right-3 bottom-12 hidden items-center gap-2.5 rounded-2xl border border-edge bg-card/90 py-2.5 pl-3 pr-4 shadow-lg shadow-zinc-950/[0.06] backdrop-blur sm:flex">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500 dark:text-violet-400">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <div className="leading-tight">
+              <p className="text-[13px] font-semibold text-ink">{isZh ? '忆程 ProjectMemo' : 'ProjectMemo'}</p>
+              <p className="text-xs text-ink-faint">{isZh ? 'C4-AI 已进复赛' : 'C4-AI Semifinalist'}</p>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* --------------------------- Directions --------------------------- */}
+      <section>
+        <SectionHeading
+          eyebrow={isZh ? '研究方向' : 'Research Directions'}
+          title={isZh ? '我在关注什么' : 'What I’m working on'}
+          lede={
+            isZh
+              ? '围绕智能体的可靠性展开：从执行环境、协作机制，到可验证的数学推理。'
+              : 'Reliability of intelligent agents — from execution harnesses and collaboration to verifiable mathematical reasoning.'
+          }
+        />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          {directionsData.map((d, i) => (
+            <Reveal key={d.id} delay={i * 70}>
+              <div className="group h-full rounded-2xl border border-edge bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-edge-strong hover:shadow-lg hover:shadow-zinc-950/[0.05]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 text-indigo-500 transition-colors group-hover:from-indigo-500/20 group-hover:to-violet-500/20 dark:text-indigo-400">
+                  {directionIcons[d.id]}
+                </div>
+                <h3 className="mt-4 text-[15px] font-semibold text-ink">{isZh ? d.titleZh : d.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">{isZh ? d.descZh : d.desc}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <section className="p-12 rounded-3xl bg-gradient-to-br from-primary-700 to-primary-500 text-center space-y-6 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/20 rounded-full -ml-32 -mb-32 blur-3xl"></div>
-        <h2 className="text-3xl md:text-4xl font-bold text-white relative z-10">{isZh ? '欢迎一起交流合作' : 'Interested in Collaboration?'}</h2>
-        <p className="text-emerald-100 text-lg relative z-10 max-w-xl mx-auto">
-          {isZh ? '欢迎交流 AI、数学和有趣的研究方向。' : "Let's talk about AI, Math, or interesting research opportunities."}
-        </p>
-        <div className="pt-4 relative z-10">
-          <Link
-            to="/contact"
-            className="px-8 py-4 bg-white text-primary-700 font-bold rounded-xl hover:shadow-xl transition-all inline-block"
-          >
-            {isZh ? '联系我' : 'Get In Touch'}
-          </Link>
+      {/* ------------------------ Featured projects ----------------------- */}
+      <section>
+        <div className="flex items-end justify-between gap-6">
+          <SectionHeading
+            eyebrow={isZh ? '精选项目' : 'Featured Projects'}
+            title={isZh ? '正在构建的东西' : 'Things I’m building'}
+          />
+          <Reveal className="hidden shrink-0 sm:block">
+            <Link
+              to="/projects"
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted transition-colors hover:text-ink"
+            >
+              {isZh ? '全部项目' : 'All projects'}
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+          </Reveal>
         </div>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {featured.map((p, i) => (
+            <Reveal key={p.id} delay={i * 80}>
+              <Link
+                to="/projects"
+                className="group flex h-full flex-col rounded-2xl border border-edge bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-edge-strong hover:shadow-lg hover:shadow-zinc-950/[0.05]"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">
+                    {isZh ? p.typeZh : p.type}
+                  </span>
+                  {p.status && (
+                    <span className="inline-flex shrink-0 items-center rounded-full bg-violet-500/10 px-2.5 py-1 text-[11px] font-semibold text-violet-600 ring-1 ring-inset ring-violet-500/20 dark:text-violet-300">
+                      {isZh ? p.statusZh : p.status}
+                    </span>
+                  )}
+                </div>
+                <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink">
+                  {isZh ? p.nameZh : p.name}
+                </h3>
+                <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">
+                  {isZh ? p.descriptionZh : p.description}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {p.tags.slice(0, 3).map((t) => (
+                    <Tag key={t}>{t}</Tag>
+                  ))}
+                  {p.tags.length > 3 && <Tag>+{p.tags.length - 3}</Tag>}
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* -------------------------------- CTA ------------------------------ */}
+      <section>
+        <Reveal>
+          <div className="gradient-border relative overflow-hidden rounded-3xl px-8 py-16 text-center sm:px-16">
+            <div className="pointer-events-none absolute left-1/2 top-0 h-56 w-[36rem] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-indigo-500/15 to-violet-500/15 blur-3xl" />
+            <h2 className="relative text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              {isZh ? '一起做点有趣的东西' : 'Let’s build something interesting'}
+            </h2>
+            <p className="relative mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-ink-muted">
+              {isZh
+                ? '欢迎交流 Agent、数学或任何有趣的研究想法。'
+                : 'Always up for a conversation about agents, math, or interesting research problems.'}
+            </p>
+            <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-canvas transition-all hover:opacity-85"
+              >
+                {isZh ? '联系我' : 'Get in Touch'}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <a
+                href={`https://github.com/${personalData.contact.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-full border border-edge bg-card px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-edge-strong"
+              >
+                GitHub
+              </a>
+            </div>
+          </div>
+        </Reveal>
       </section>
     </div>
   );

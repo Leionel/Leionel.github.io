@@ -9,34 +9,41 @@ export default {
     },
     extend: {
       colors: {
-        primary: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+        // Semantic surface & ink tokens — values live in src/index.css as CSS
+        // variables so light/dark stay perfectly in sync.
+        // (Named `canvas`, not `base`, to avoid colliding with the `text-base` font size.)
+        canvas: 'rgb(var(--c-base) / <alpha-value>)',
+        card: 'rgb(var(--c-card) / <alpha-value>)',
+        'card-muted': 'rgb(var(--c-card-muted) / <alpha-value>)',
+        edge: {
+          DEFAULT: 'rgb(var(--c-edge) / <alpha-value>)',
+          strong: 'rgb(var(--c-edge-strong) / <alpha-value>)',
         },
-        secondary: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
+        ink: {
+          DEFAULT: 'rgb(var(--c-ink) / <alpha-value>)',
+          muted: 'rgb(var(--c-ink-muted) / <alpha-value>)',
+          faint: 'rgb(var(--c-ink-faint) / <alpha-value>)',
         },
       },
+      fontFamily: {
+        sans: [
+          'Inter Variable',
+          'Inter',
+          '-apple-system',
+          'PingFang SC',
+          'Hiragino Sans GB',
+          'Microsoft YaHei',
+          'Segoe UI',
+          'sans-serif',
+        ],
+        mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
+      maxWidth: {
+        '8xl': '88rem',
+      },
       animation: {
-        float: 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        float: 'float 7s ease-in-out infinite',
+        'float-delayed': 'float 8s ease-in-out 1.2s infinite',
       },
       keyframes: {
         float: {

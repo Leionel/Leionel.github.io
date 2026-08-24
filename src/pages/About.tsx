@@ -1,106 +1,186 @@
+import { Camera, GraduationCap, Mail, MapPin, Music2, Trophy, User } from 'lucide-react';
 import personalData from '../data/personal.json';
-import { GraduationCap, BookOpen, User, MapPin } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
+import { Reveal, SectionHeading, Tag } from '../components/ui';
 
 const About = () => {
   const { isZh } = useLanguage();
 
+  const hobbies = [
+    {
+      icon: <Trophy className="h-4 w-4" />,
+      title: isZh ? '运动' : 'Sports',
+      items: isZh ? ['足球', '篮球', 'F1'] : ['Football', 'Basketball', 'F1'],
+    },
+    {
+      icon: <Music2 className="h-4 w-4" />,
+      title: isZh ? '音乐' : 'Music',
+      items: [],
+    },
+    {
+      icon: <Camera className="h-4 w-4" />,
+      title: isZh ? '摄影' : 'Photography',
+      items: [],
+    },
+  ];
+
   return (
-    <div className="max-w-4xl mx-auto space-y-16">
-      <section className="space-y-6">
-        <h1 className="text-4xl font-bold text-white">{isZh ? '关于我' : 'About Me'}</h1>
-        <div className="prose prose-invert max-w-none text-slate-400 text-lg leading-relaxed space-y-4">
+    <div className="space-y-20 md:space-y-28">
+      {/* ------------------------------ Header ----------------------------- */}
+      <Reveal className="max-w-2xl">
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-400">
+          {isZh ? '关于我' : 'About'}
+        </p>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          {isZh ? '你好，我是肖圣鑫' : 'Hi, I’m Shengxin Xiao'}
+        </h1>
+        <div className="mt-6 space-y-4 text-base leading-relaxed text-ink-muted sm:text-lg">
           {isZh ? (
             <>
               <p>
-                我目前就读于<strong>{personalData.education.universityZh}</strong>，专业为
-                <strong>{personalData.education.majorZh}</strong>。我的学习与研究兴趣聚焦在数学与人工智能的交叉方向。
+                我就读于<strong className="font-semibold text-ink">武汉大学数学与统计学院</strong>
+                信息与计算科学专业（自强班），研究让智能系统变得可靠所需的数学基础——线性代数、概率论与数值方法。
               </p>
               <p>
-                依托扎实的<strong>矩阵论、概率论与统计学</strong>基础，我持续探索从理论模型到工程落地的完整闭环。
-                当前重点方向是<strong>多模态文档理解</strong>与可进行数学推理的智能体系统。
+                当前关注点是<strong className="font-semibold text-ink">智能体的可靠性</strong>
+                ：构建让 LLM 安全行动的 Harness、编排多智能体协作，以及让数学推理建立在工具可验证的计算之上。
+                我喜欢能从理论一路闭环到可运行系统的工作。
               </p>
             </>
           ) : (
             <>
               <p>
-                I am a student at <strong>{personalData.education.university}</strong>, majoring in <strong>{personalData.education.major}</strong>.
-                My academic journey is driven by a deep fascination with the intersection of mathematics and artificial intelligence.
+                I study <strong className="font-semibold text-ink">Information and Computing Science (Ziqiang Class)</strong> at
+                Wuhan University’s School of Mathematics and Statistics — the mathematics that makes intelligent systems
+                trustworthy: linear algebra, probability, and numerical methods.
               </p>
               <p>
-                With a solid foundation in <strong>Matrix Theory, Probability, and Statistics</strong>, I strive to bridge the gap between
-                theoretical mathematical concepts and practical engineering solutions. Currently, I am focused on
-                <strong> Multimodal Document Understanding</strong> and building intelligent agents that can reason through complex mathematical problems.
+                My current focus is <strong className="font-semibold text-ink">agent reliability</strong>: building harnesses
+                that let LLMs act safely, coordinating multi-agent systems, and grounding mathematical reasoning in
+                tool-verified computation. I like work that closes the loop from theory to something you can actually run.
               </p>
             </>
           )}
         </div>
-      </section>
+      </Reveal>
 
-      <section className="space-y-8">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <GraduationCap className="w-6 h-6 text-blue-500" />
-          {isZh ? '教育背景' : 'Education'}
-        </h2>
-        <div className="relative border-l-2 border-slate-800 ml-3 pl-8 space-y-12">
-          <div className="relative">
-            <div className="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-slate-950"></div>
-            <div className="space-y-2">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                <h3 className="text-xl font-bold text-white">{personalData.education.university}</h3>
-                <span className="text-sm font-medium text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">
+      {/* --------------------- Education + info sidebar -------------------- */}
+      <section className="grid gap-4 lg:grid-cols-3">
+        <Reveal className="lg:col-span-2">
+          <div className="h-full rounded-2xl border border-edge bg-card p-7 sm:p-8">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
+                <GraduationCap className="h-5 w-5" />
+              </span>
+              <h2 className="text-lg font-semibold text-ink">{isZh ? '教育背景' : 'Education'}</h2>
+            </div>
+
+            <div className="mt-6">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-xl font-semibold tracking-tight text-ink">
+                  {isZh ? personalData.education.universityZh : personalData.education.university}
+                </h3>
+                <span className="rounded-full bg-card-muted px-3 py-1 font-mono text-xs text-ink-muted">
                   {isZh ? personalData.education.periodZh : personalData.education.period}
                 </span>
               </div>
-              <p className="text-slate-300 font-medium">{isZh ? personalData.education.collegeZh : personalData.education.college}</p>
-              <p className="text-slate-400">
-                {isZh ? personalData.education.majorZh : personalData.education.major} · {isZh ? personalData.education.degreeZh : personalData.education.degree}
+              <p className="mt-2 text-[15px] text-ink-muted">
+                {isZh ? personalData.education.collegeZh : personalData.education.college}
               </p>
-              <div className="flex items-center gap-4 text-sm text-slate-500 pt-2">
-                <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {isZh ? '中国·武汉' : 'Wuhan, China'}</span>
+              <p className="mt-1 text-sm text-ink-faint">
+                {isZh ? personalData.education.majorZh : personalData.education.major} ·{' '}
+                {isZh ? personalData.education.degreeZh : personalData.education.degree}
+              </p>
+
+              <div className="mt-6 border-t border-edge pt-5">
+                <p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-ink-faint">
+                  {isZh ? '主修课程' : 'Major courses'}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {(isZh ? personalData.education.coursesZh : personalData.education.courses).map((c) => (
+                    <Tag key={c}>{c}</Tag>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </Reveal>
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <BookOpen className="w-6 h-6 text-blue-500" />
-          {isZh ? '主修课程' : 'Major Courses'}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {(isZh ? personalData.education.coursesZh : personalData.education.courses).map((course, i) => (
-            <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-slate-300">{course}</span>
+        <Reveal delay={80}>
+          <div className="h-full rounded-2xl border border-edge bg-card p-7 sm:p-8">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500 dark:text-violet-400">
+                <User className="h-5 w-5" />
+              </span>
+              <h2 className="text-lg font-semibold text-ink">{isZh ? '个人信息' : 'Profile'}</h2>
             </div>
-          ))}
-        </div>
+
+            <dl className="mt-6 space-y-5">
+              <div>
+                <dt className="text-xs text-ink-faint">{isZh ? '姓名' : 'Name'}</dt>
+                <dd className="mt-1 text-[15px] font-medium text-ink">
+                  {personalData.name} · {personalData.nameZh}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-ink-faint">{isZh ? '身份' : 'Role'}</dt>
+                <dd className="mt-1 text-[15px] font-medium text-ink">{isZh ? personalData.titleZh : personalData.title}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-ink-faint">{isZh ? '地点' : 'Location'}</dt>
+                <dd className="mt-1 inline-flex items-center gap-1.5 text-[15px] font-medium text-ink">
+                  <MapPin className="h-3.5 w-3.5 text-ink-faint" />
+                  {isZh ? '中国 湖北 武汉' : 'Wuhan, China'}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-ink-faint">Email</dt>
+                <dd className="mt-1">
+                  <a
+                    href={`mailto:${personalData.contact.email}`}
+                    className="inline-flex items-center gap-1.5 text-[15px] font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+                  >
+                    <Mail className="h-3.5 w-3.5" />
+                    {personalData.contact.email}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </Reveal>
       </section>
 
-      <section className="p-8 rounded-2xl bg-slate-900 border border-slate-800 space-y-6">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <User className="w-6 h-6 text-blue-500" />
-          {isZh ? '个人信息' : 'Personal Information'}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-slate-400">
-          <div className="space-y-1">
-            <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">{isZh ? '姓名' : 'Name'}</p>
-            <p className="text-white font-medium">{personalData.name} ({personalData.nameZh})</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">{isZh ? '身份' : 'Role'}</p>
-            <p className="text-white font-medium">{isZh ? personalData.titleZh : personalData.title}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">Email</p>
-            <a href={`mailto:${personalData.contact.email}`} className="text-blue-400 hover:underline">{personalData.contact.email}</a>
-          </div>
-          <div className="space-y-1">
-            <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">{isZh ? '地点' : 'Location'}</p>
-            <p className="text-white font-medium">{isZh ? '中国 湖北 武汉' : 'Wuhan, Hubei, China'}</p>
-          </div>
+      {/* ---------------------------- Beyond work -------------------------- */}
+      <section>
+        <SectionHeading
+          eyebrow={isZh ? '工作之外' : 'Beyond Work'}
+          title={isZh ? '不写代码的时候' : 'When I’m not coding'}
+        />
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {hobbies.map((h, i) => (
+            <Reveal key={h.title} delay={i * 70}>
+              <div className="h-full rounded-2xl border border-edge bg-card p-6 transition-colors hover:border-edge-strong">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-card-muted text-ink-muted">
+                  {h.icon}
+                </span>
+                <h3 className="mt-4 text-[15px] font-semibold text-ink">{h.title}</h3>
+                {h.items.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {h.items.map((item) => (
+                      <Tag key={item}>{item}</Tag>
+                    ))}
+                  </div>
+                )}
+                {h.items.length === 0 && (
+                  <p className="mt-2 text-sm text-ink-faint">
+                    {h.title === (isZh ? '音乐' : 'Music')
+                      ? isZh ? '歌单常驻。' : 'Always on.'
+                      : isZh ? '随拍记录生活。' : 'Capturing everyday moments.'}
+                  </p>
+                )}
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
     </div>

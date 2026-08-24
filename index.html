@@ -5,6 +5,27 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shengxin Xiao | Portfolio</title>
+    <meta
+      name="description"
+      content="Shengxin Xiao (肖圣鑫) — undergraduate researcher at Wuhan University working on agent harnesses, multi-agent systems, and mathematical reasoning."
+    />
+    <meta property="og:title" content="Shengxin Xiao | Portfolio" />
+    <meta
+      property="og:description"
+      content="Undergraduate researcher at Wuhan University — agent harnesses, multi-agent systems, and mathematical reasoning."
+    />
+    <meta property="og:type" content="website" />
+    <script>
+      // Apply the persisted theme before first paint to avoid a flash.
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.classList.add(t);
+        document.documentElement.style.colorScheme = t;
+      } catch (e) {}
+    </script>
     <script type="module">
       if (import.meta.hot?.on) {
         import.meta.hot.on('vite:error', (error) => {

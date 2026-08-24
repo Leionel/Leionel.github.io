@@ -1,5 +1,14 @@
 [
   {
+    "id": 3,
+    "name": "Wuhan University 1st \"Volcano Cup\" Agent Innovation Competition",
+    "nameZh": "武汉大学首届「火山杯」智能体创新大赛",
+    "award": "First Prize",
+    "awardZh": "一等奖",
+    "date": "H1 2026",
+    "dateZh": "2026 上半年"
+  },
+  {
     "id": 1,
     "name": "2024/2025 National Undergraduate Mathematics Competition (CMC)",
     "nameZh": "2024/2025年全国大学生数学竞赛",

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "harness",
+    "title": "Agent Harness",
+    "titleZh": "Agent Harness 工程",
+    "desc": "Reliable execution environments for LLMs — context management, tool orchestration, and feedback loops.",
+    "descZh": "为 LLM 构建可靠的执行环境：上下文管理、工具编排与反馈闭环。"
+  },
+  {
+    "id": "multi-agent",
+    "title": "Multi-Agent Systems",
+    "titleZh": "多智能体系统",
+    "desc": "Role specialization, task decomposition, and orchestration that make hard problems parallel and verifiable.",
+    "descZh": "角色分工、任务分解与协作编排，让复杂问题可并行、可验证。"
+  },
+  {
+    "id": "math-reasoning",
+    "title": "Mathematical Reasoning",
+    "titleZh": "数学推理与工具调用",
+    "desc": "Tool-calling workflows with SymPy/NumPy verification loops for trustworthy reasoning.",
+    "descZh": "结合 SymPy/NumPy 验证闭环的工具调用工作流，让推理结果可校验。"
+  },
+  {
+    "id": "rag",
+    "title": "RAG & Knowledge",
+    "titleZh": "知识增强与检索",
+    "desc": "Domain knowledge bases, hybrid retrieval, and evaluation datasets for grounded generation.",
+    "descZh": "领域知识库构建、混合检索与评测数据集，让生成有据可依。"
+  }
+]

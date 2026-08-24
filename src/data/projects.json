@@ -1,5 +1,84 @@
 [
   {
+    "id": 3,
+    "name": "ProjectMemo",
+    "nameZh": "忆程 ProjectMemo",
+    "role": "Team Leader",
+    "roleZh": "队长 & 负责人",
+    "period": "2026 - Present",
+    "periodZh": "2026 - 至今",
+    "type": "C4-AI 2026 · Agent Innovation",
+    "typeZh": "中国高校计算机大赛—人工智能创意赛 · Agent 创新方向",
+    "status": "Semifinalist",
+    "statusZh": "已晋级复赛",
+    "repo": "https://github.com/Leionel/projectmemo",
+    "description": "A proactive project-memory agent for project-based learning: it distills scattered fragments — paper notes, bugs, meeting conclusions, experiment logs — into linked, traceable long-term memory, then pushes evidence-backed, confirmation-gated actions through to deliverables.",
+    "descriptionZh": "面向大学生项目制学习的主动推进 Agent：将论文笔记、代码报错、会议结论、实验记录等碎片沉淀为可关联、可追溯的长期项目记忆，主动发现截止日期与风险缺口，推动证据支撑、需用户确认的行动闭环，直至自动生成周报、答辩大纲等交付成果。",
+    "details": [
+      "Designed the core loop of capture → knowledge cards → proactive intervention → action loop → reflection, with five rule-based triggers covering deadlines, risks, stagnation, experiment gaps, and material gaps.",
+      "Shipped a Next.js/Prisma backend shared by a web client and a native HarmonyOS (ArkTS) app, with hybrid keyword + embedding memory retrieval.",
+      "Mock-first LLM pipeline (OpenAI-compatible with deterministic offline fallback) so every demo runs without network or keys; the agent proposes, the user confirms, and every reminder cites its evidence cards."
+    ],
+    "detailsZh": [
+      "设计「碎片捕获 → 知识卡片 → 主动介入 → 行动闭环 → 复盘沉淀」核心链路，内置截止日期、风险、停滞、实验缺口、材料缺口五类规则触发器。",
+      "以 Next.js/Prisma 后端同时支撑 Web 端与鸿蒙 ArkTS 原生客户端，记忆检索采用关键词 + 向量混合召回。",
+      "LLM 管线离线可演示（OpenAI 兼容 + 确定性降级）；智能体只建议、用户确认，每条提醒均可溯源到证据卡片。"
+    ],
+    "tags": ["Agent Memory", "Multi-Agent", "HarmonyOS", "ArkTS", "Next.js", "RAG", "Prisma"]
+  },
+  {
+    "id": 4,
+    "name": "Math Modeling Evidence Harness",
+    "nameZh": "数模证据 Harness",
+    "role": "Solo Developer",
+    "roleZh": "独立开发",
+    "period": "Aug 2026 - Present",
+    "periodZh": "2026.8 - 至今",
+    "type": "Open-source Agent Harness",
+    "typeZh": "开源项目 · Agent Harness",
+    "repo": "https://github.com/Leionel/math-model-skill",
+    "description": "An evidence, verification, and competition-compliance harness for math-modeling contests: it turns a competition project into a manifest-driven pipeline with artifact DAGs, verification gates, and auditable AI-usage disclosure.",
+    "descriptionZh": "面向数学建模竞赛的证据、验证与合规 Harness：把比赛项目变成由清单驱动的流水线——工件 DAG、验证门禁与可审计的 AI 使用披露。",
+    "details": [
+      "CLI core (harness.py): init/status/prepare/check drive a project through staged milestones with competition profiles (CUMCM etc.) and presets.",
+      "AI-usage ledger with human-verified gates — every external AI interaction is recorded, reviewed, and synced to AI_USAGE_LEDGER.md before formal gates can pass.",
+      "Deterministic projections (artifact DAG, run manifest, run index) keep results and papers reproducible and audit-ready."
+    ],
+    "detailsZh": [
+      "CLI 核心（harness.py）：init/status/prepare/check 驱动项目按里程碑推进，内置比赛画像（CUMCM 等）与预设。",
+      "AI 使用台账与人工核验门禁——每次外部 AI 使用都需登记、人审并同步到 AI_USAGE_LEDGER.md，未核验会阻断正式 Gate。",
+      "确定性投影（工件 DAG、运行清单、运行索引）让结果与论文可复现、可审计。"
+    ],
+    "tags": ["Agent Harness", "CLI", "Python", "Reproducibility", "Compliance"]
+  },
+  {
+    "id": 2,
+    "name": "Luojia Digital Math Assistant",
+    "nameZh": "珞珈数智助教",
+    "role": "Leader & Principal Investigator",
+    "roleZh": "队长 & 负责人",
+    "period": "Nov 2025 - Present",
+    "periodZh": "2025.11 - 至今",
+    "type": "WHU 1st Volcano Cup · Agent Innovation",
+    "typeZh": "武汉大学首届「火山杯」智能体创新大赛",
+    "status": "First Prize",
+    "statusZh": "一等奖",
+    "repo": "https://github.com/Leionel/luojia-math-tutor-skill",
+    "description": "A multimodal math reasoning agent based on RAG and Tool-Calling for Higher Mathematics and Linear Algebra.",
+    "descriptionZh": "基于 RAG 与工具调用的多模态数学推理智能体，支持高等数学与线性代数的教学与解题。",
+    "details": [
+      "Built a low-code teaching agent supporting text and image input, integrating OCR, knowledge base retrieval (RAG), and Python tool calling.",
+      "Designed an 'Intent Recognition - Tool Call - Result Verification' workflow using SymPy/NumPy for calculation validation and visualization.",
+      "Collaborated on building a specialized math knowledge base and evaluation dataset from textbooks and open-source data."
+    ],
+    "detailsZh": [
+      "基于低代码平台搭建面向高等数学/线性代数的教学智能体，支持文本与图片输入，集成 OCR、知识库检索 (RAG) 与 Python 工具调用。",
+      "设计 “意图识别—工具调用—结果验证” 的智能体工作流，结合 SymPy/NumPy 完成计算验证与可视化，提升复杂数学问题求解的可靠性。",
+      "参与构建数学领域知识库与评测数据集（教材+开源数据），完成数据清洗、结构化处理与检索优化。"
+    ],
+    "tags": ["RAG", "Intelligent Agent", "Mathematical Reasoning", "OCR", "Tool-Calling", "SymPy"]
+  },
+  {
     "id": 1,
     "name": "Multimodal Document Understanding & Structural Parsing",
     "nameZh": "多模态文档理解与结构化解析",
@@ -22,29 +101,5 @@
       "实现评测闭环与指标监控，支持多指标（mAP/F1/BLEU/TEDS）自动化评估与持续优化。"
     ],
     "tags": ["Document Parsing", "Multimodal", "GPU Optimization", "CUDA", "Evaluation"]
-  },
-  {
-    "id": 2,
-    "name": "Luojia Digital Math Assistant",
-    "nameZh": "珞珈数智助教",
-    "role": "Leader & Principal Investigator",
-    "roleZh": "队长 & 负责人",
-    "period": "Nov 2025 - Present",
-    "periodZh": "2025.11 - 至今",
-    "type": "Intelligent Agent System Research (University Level Competition)",
-    "typeZh": "智能体系统研发项目 (校级竞赛)",
-    "description": "A multimodal math reasoning agent based on RAG and Tool-Calling for Higher Mathematics and Linear Algebra.",
-    "descriptionZh": "基于 RAG 与工具调用的多模态数学推理智能体，支持高等数学与线性代数的教学与解题。",
-    "details": [
-      "Built a low-code teaching agent supporting text and image input, integrating OCR, knowledge base retrieval (RAG), and Python tool calling.",
-      "Designed an 'Intent Recognition - Tool Call - Result Verification' workflow using SymPy/NumPy for calculation validation and visualization.",
-      "Collaborated on building a specialized math knowledge base and evaluation dataset from textbooks and open-source data."
-    ],
-    "detailsZh": [
-      "基于低代码平台搭建面向高等数学/线性代数的教学智能体，支持文本与图片输入，集成 OCR、知识库检索 (RAG) 与 Python 工具调用。",
-      "设计 “意图识别—工具调用—结果验证” 的智能体工作流，结合 SymPy/NumPy 完成计算验证与可视化，提升复杂数学问题求解的可靠性。",
-      "参与构建数学领域知识库与评测数据集（教材+开源数据），完成数据清洗、结构化处理与检索优化。"
-    ],
-    "tags": ["RAG", "Intelligent Agent", "Mathematical Reasoning", "OCR", "Tool-Calling", "SymPy"]
   }
 ]
