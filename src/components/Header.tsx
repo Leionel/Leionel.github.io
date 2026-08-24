@@ -16,6 +16,7 @@ const Header = () => {
     { name: isZh ? '首页' : 'Home', path: '/' },
     { name: isZh ? '关于' : 'About', path: '/about' },
     { name: isZh ? '项目' : 'Projects', path: '/projects' },
+    { name: isZh ? '笔记' : 'Notes', path: '/notes' },
     { name: isZh ? '技能' : 'Skills', path: '/skills' },
     { name: isZh ? '奖项' : 'Awards', path: '/awards' },
     { name: isZh ? '联系' : 'Contact', path: '/contact' },

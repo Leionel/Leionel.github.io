@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import personalData from '../data/personal.json';
-import { ArrowUpRight, Check, Copy, Github, Mail, MessageSquare, Phone } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Github, Mail } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
 import { Reveal } from '../components/ui';
 
@@ -21,22 +21,6 @@ const Contact = () => {
       label: isZh ? '邮箱' : 'Email',
       value: personalData.contact.email,
       action: () => handleCopy(personalData.contact.email, 'email'),
-      external: false,
-    },
-    {
-      key: 'phone',
-      icon: <Phone className="h-5 w-5" />,
-      label: isZh ? '电话' : 'Phone',
-      value: personalData.contact.phone,
-      action: () => handleCopy(personalData.contact.phone, 'phone'),
-      external: false,
-    },
-    {
-      key: 'wechat',
-      icon: <MessageSquare className="h-5 w-5" />,
-      label: isZh ? '微信' : 'WeChat',
-      value: personalData.contact.wechat,
-      action: () => handleCopy(personalData.contact.wechat, 'wechat'),
       external: false,
     },
     {
@@ -102,8 +86,8 @@ const Contact = () => {
           </h2>
           <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-ink-muted">
             {isZh
-              ? '通过以上任意方式联系我，通常会在 24 小时内回复。'
-              : 'Reach out through any channel above — I usually reply within 24 hours.'}
+              ? '欢迎实习机会、科研合作，或任何有意思的 Agent 项目交流。'
+              : 'Open to internships, research collaborations, and interesting agent projects.'}
           </p>
           <a
             href={`mailto:${personalData.contact.email}`}

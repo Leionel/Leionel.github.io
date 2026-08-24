@@ -1,7 +1,9 @@
-import { Bot, Settings, Sigma, Terminal } from 'lucide-react';
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Bot, Settings, Sigma, Terminal } from 'lucide-react';
 import skillsData from '../data/skills.json';
 import { useLanguage } from '../contexts/language';
-import { Reveal, Tag } from '../components/ui';
+import { Reveal } from '../components/ui';
 
 const categoryIcons: Record<string, React.ReactNode> = {
   'AI & Agents': <Bot className="h-5 w-5" />,
@@ -41,13 +43,34 @@ const Skills = () => {
                   {isZh ? category.categoryZh : category.category}
                 </h2>
               </div>
-              <div className="mt-5 flex flex-wrap gap-2">
+              <ul className="mt-5 divide-y divide-edge">
                 {category.skills.map((s) => (
-                  <Tag key={s.name} className="px-3 py-1.5 text-xs">
-                    {isZh ? s.nameZh : s.name}
-                  </Tag>
+                  <li
+                    key={s.name}
+                    className="flex flex-col gap-1 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                  >
+                    <span className="shrink-0 text-sm font-semibold text-ink">{isZh ? s.nameZh : s.name}</span>
+                    <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-ink-faint">
+                      <ArrowRight className="h-3 w-3 shrink-0 text-edge-strong" />
+                      {s.usedIn.map((u, j) => (
+                        <Fragment key={u.name}>
+                          {j > 0 && <span className="text-edge-strong">·</span>}
+                          {u.slug ? (
+                            <Link
+                              to={`/projects/${u.slug}`}
+                              className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
+                            >
+                              {isZh ? u.nameZh : u.name}
+                            </Link>
+                          ) : (
+                            <span>{isZh ? u.nameZh : u.name}</span>
+                          )}
+                        </Fragment>
+                      ))}
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </Reveal>
         ))}

@@ -186,3 +186,156 @@ html.dark .text-gradient {
   mask-composite: exclude;
   pointer-events: none;
 }
+
+/* ------------------------- Markdown body (notes) -------------------------- */
+
+.md-body {
+  font-size: 0.9375rem;
+  line-height: 1.9;
+  color: rgb(var(--c-ink-muted));
+  overflow-wrap: break-word;
+}
+
+.md-body > :first-child {
+  margin-top: 0;
+}
+
+.md-body h1,
+.md-body h2,
+.md-body h3,
+.md-body h4 {
+  margin: 2em 0 0.75em;
+  color: rgb(var(--c-ink));
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.md-body h1 {
+  font-size: 1.375rem;
+}
+
+.md-body h2 {
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid rgb(var(--c-edge));
+  font-size: 1.1875rem;
+}
+
+.md-body h3 {
+  font-size: 1.0625rem;
+}
+
+.md-body p {
+  margin: 1em 0;
+}
+
+.md-body strong {
+  color: rgb(var(--c-ink));
+  font-weight: 600;
+}
+
+.md-body a {
+  color: #6366f1;
+  text-underline-offset: 3px;
+}
+
+.md-body a:hover {
+  text-decoration: underline;
+}
+
+html.dark .md-body a {
+  color: #a5b4fc;
+}
+
+.md-body ul,
+.md-body ol {
+  margin: 1em 0;
+  padding-left: 1.5em;
+}
+
+.md-body ul {
+  list-style: disc;
+}
+
+.md-body ol {
+  list-style: decimal;
+}
+
+.md-body li {
+  margin: 0.4em 0;
+}
+
+.md-body li::marker {
+  color: rgb(var(--c-ink-faint));
+}
+
+.md-body code {
+  padding: 0.15em 0.4em;
+  border-radius: 6px;
+  background: rgb(var(--c-card-muted));
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  font-size: 0.85em;
+}
+
+.md-body pre {
+  margin: 1.25em 0;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: #0b0b10;
+  overflow-x: auto;
+}
+
+.md-body pre code {
+  padding: 0;
+  background: transparent;
+  color: #d4d4d8;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+}
+
+.md-body blockquote {
+  margin: 1.25em 0;
+  padding-left: 1.1em;
+  border-left: 2px solid rgb(var(--glow-a) / 0.45);
+  color: rgb(var(--c-ink-faint));
+}
+
+.md-body blockquote p {
+  margin: 0.35em 0;
+}
+
+.md-body table {
+  margin: 1.25em 0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.md-body th,
+.md-body td {
+  border: 1px solid rgb(var(--c-edge));
+  padding: 0.5em 0.85em;
+  text-align: left;
+}
+
+.md-body th {
+  background: rgb(var(--c-card-muted));
+  color: rgb(var(--c-ink));
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.md-body img {
+  max-width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--c-edge));
+}
+
+.md-body hr {
+  margin: 2.25em 0;
+  border: 0;
+  border-top: 1px solid rgb(var(--c-edge));
+}

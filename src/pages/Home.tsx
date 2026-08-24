@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import personalData from '../data/personal.json';
 import projectsData from '../data/projects.json';
 import directionsData from '../data/directions.json';
+import nowData from '../data/now.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal, SectionHeading, Tag } from '../components/ui';
 import profilePhoto from '../assets/profile-photo.jpg';
+import pmPreview from '../assets/projectmemo-preview.jpg';
 
 const directionIcons: Record<string, React.ReactNode> = {
   harness: <Workflow className="h-5 w-5" />,
@@ -23,7 +25,7 @@ const Home = () => {
   const stats = [
     { value: isZh ? '3 项' : '3', label: isZh ? '竞赛奖项' : 'Competition awards' },
     { value: isZh ? '4 个' : '4', label: isZh ? '在研项目' : 'Active projects' },
-    { value: '2028', label: isZh ? '预计毕业' : 'Expected graduation' },
+    { value: isZh ? '3 个' : '3', label: isZh ? '开源仓库' : 'Open-source repos' },
   ];
 
   return (
@@ -138,6 +140,40 @@ const Home = () => {
         </Reveal>
       </section>
 
+      {/* ------------------------------- Now ------------------------------- */}
+      <section>
+        <Reveal>
+          <div className="rounded-3xl border border-edge bg-card p-7 sm:p-9">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500" />
+                </span>
+                <h2 className="font-mono text-xs font-bold uppercase tracking-[0.22em] text-ink">Now</h2>
+              </div>
+              <span className="font-mono text-xs text-ink-faint">{isZh ? nowData.updatedZh : nowData.updatedEn}</span>
+            </div>
+            <div className="mt-6 grid gap-7 sm:grid-cols-3">
+              {[nowData.exploring, nowData.building, nowData.reading].map((col) => (
+                <div key={col.label}>
+                  <p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-indigo-500 dark:text-indigo-400">
+                    {isZh ? col.labelZh : col.label}
+                  </p>
+                  <ul className="mt-3 space-y-1.5">
+                    {(isZh ? col.items : col.itemsEn).map((it) => (
+                      <li key={it} className="text-sm leading-relaxed text-ink-muted">
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
       {/* --------------------------- Directions --------------------------- */}
       <section>
         <SectionHeading
@@ -186,30 +222,49 @@ const Home = () => {
           {featured.map((p, i) => (
             <Reveal key={p.id} delay={i * 80}>
               <Link
-                to="/projects"
-                className="group flex h-full flex-col rounded-2xl border border-edge bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-edge-strong hover:shadow-lg hover:shadow-zinc-950/[0.05]"
+                to={`/projects/${p.slug}`}
+                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-edge bg-card transition-all duration-300 hover:-translate-y-0.5 hover:border-edge-strong hover:shadow-lg hover:shadow-zinc-950/[0.05]"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">
-                    {isZh ? p.typeZh : p.type}
-                  </span>
-                  {p.status && (
-                    <span className="inline-flex shrink-0 items-center rounded-full bg-violet-500/10 px-2.5 py-1 text-[11px] font-semibold text-violet-600 ring-1 ring-inset ring-violet-500/20 dark:text-violet-300">
-                      {isZh ? p.statusZh : p.status}
-                    </span>
+                <div className="relative aspect-[16/9] w-full shrink-0 overflow-hidden border-b border-edge">
+                  {p.slug === 'projectmemo' ? (
+                    <img
+                      src={pmPreview}
+                      alt={isZh ? p.nameZh : p.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-indigo-500/[0.08] via-violet-500/[0.05] to-fuchsia-500/[0.08]">
+                      <span className="font-mono text-6xl font-bold tracking-tight text-ink/[0.07] transition-colors duration-300 group-hover:text-indigo-500/15">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                    </div>
                   )}
                 </div>
-                <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink">
-                  {isZh ? p.nameZh : p.name}
-                </h3>
-                <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">
-                  {isZh ? p.descriptionZh : p.description}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {p.tags.slice(0, 3).map((t) => (
-                    <Tag key={t}>{t}</Tag>
-                  ))}
-                  {p.tags.length > 3 && <Tag>+{p.tags.length - 3}</Tag>}
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-faint">
+                      {isZh ? p.typeZh : p.type}
+                    </span>
+                    {p.status && (
+                      <span className="inline-flex shrink-0 items-center rounded-full bg-violet-500/10 px-2.5 py-1 text-[11px] font-semibold text-violet-600 ring-1 ring-inset ring-violet-500/20 dark:text-violet-300">
+                        {isZh ? p.statusZh : p.status}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink">
+                    {isZh ? p.nameZh : p.name}
+                  </h3>
+                  <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">
+                    {isZh ? p.descriptionZh : p.description}
+                  </p>
+                  <div className="mt-5 flex flex-wrap items-center gap-1.5">
+                    {p.tags.slice(0, 3).map((t) => (
+                      <Tag key={t}>{t}</Tag>
+                    ))}
+                    {p.tags.length > 3 && <Tag>+{p.tags.length - 3}</Tag>}
+                    <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-ink-faint transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-indigo-500 dark:group-hover:text-indigo-400" />
+                  </div>
                 </div>
               </Link>
             </Reveal>

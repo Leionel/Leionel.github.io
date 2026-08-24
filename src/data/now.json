@@ -1,0 +1,22 @@
+{
+  "updatedZh": "2026.8",
+  "updatedEn": "AUG 2026",
+  "exploring": {
+    "label": "Exploring",
+    "labelZh": "在探索",
+    "items": ["Agent Harness 工程", "长程任务可靠性", "Diffusion LLM (dLLM) 与 Agent"],
+    "itemsEn": ["Agent harness engineering", "Long-horizon reliability", "Diffusion LLMs (dLLM) as agents"]
+  },
+  "building": {
+    "label": "Building",
+    "labelZh": "在构建",
+    "items": ["忆程 ProjectMemo · C4-AI 复赛", "数模证据 Harness 开源迭代"],
+    "itemsEn": ["ProjectMemo — C4-AI semifinal", "Math Modeling Evidence Harness"]
+  },
+  "reading": {
+    "label": "Reading",
+    "labelZh": "在读",
+    "items": ["Agent runtime 与上下文管理", "工具验证的数学推理", "dLLM 推理论文"],
+    "itemsEn": ["Agent runtimes & context management", "Tool-verified math reasoning", "dLLM reasoning papers"]
+  }
+}

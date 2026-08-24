@@ -3,47 +3,172 @@
     "category": "AI & Agents",
     "categoryZh": "AI 与智能体",
     "skills": [
-      { "name": "Agent Harness Design", "nameZh": "Agent Harness 设计" },
-      { "name": "Multi-Agent Systems", "nameZh": "多智能体系统" },
-      { "name": "RAG & Knowledge Base", "nameZh": "RAG 与知识库" },
-      { "name": "Tool Calling", "nameZh": "工具调用" },
-      { "name": "Prompt Engineering", "nameZh": "提示工程" },
-      { "name": "LLM App Pipelines", "nameZh": "LLM 应用管线" }
+      {
+        "name": "Agent Harness Design",
+        "nameZh": "Agent Harness 设计",
+        "usedIn": [
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" },
+          { "name": "Evidence Harness", "nameZh": "数模证据 Harness", "slug": "math-model-harness" }
+        ]
+      },
+      {
+        "name": "Multi-Agent Systems",
+        "nameZh": "多智能体系统",
+        "usedIn": [
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" },
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" }
+        ]
+      },
+      {
+        "name": "RAG & Knowledge Base",
+        "nameZh": "RAG 与知识库",
+        "usedIn": [
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" },
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" }
+        ]
+      },
+      {
+        "name": "Tool Calling",
+        "nameZh": "工具调用",
+        "usedIn": [
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" },
+          { "name": "Evidence Harness", "nameZh": "数模证据 Harness", "slug": "math-model-harness" }
+        ]
+      },
+      {
+        "name": "Prompt Engineering",
+        "nameZh": "提示工程",
+        "usedIn": [
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" },
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" }
+        ]
+      },
+      {
+        "name": "LLM App Pipelines",
+        "nameZh": "LLM 应用管线",
+        "usedIn": [
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" },
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" }
+        ]
+      }
     ]
   },
   {
     "category": "Languages & Frameworks",
     "categoryZh": "语言与框架",
     "skills": [
-      { "name": "Python", "nameZh": "Python" },
-      { "name": "TypeScript", "nameZh": "TypeScript" },
-      { "name": "NumPy / Pandas / SymPy", "nameZh": "NumPy / Pandas / SymPy" },
-      { "name": "React & Next.js", "nameZh": "React & Next.js" },
-      { "name": "Prisma", "nameZh": "Prisma" },
-      { "name": "ArkTS (HarmonyOS)", "nameZh": "ArkTS（鸿蒙）" }
+      {
+        "name": "Python",
+        "nameZh": "Python",
+        "usedIn": [
+          { "name": "Evidence Harness", "nameZh": "数模证据 Harness", "slug": "math-model-harness" },
+          { "name": "DocParse", "nameZh": "文档解析大创", "slug": "docparse" }
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "nameZh": "TypeScript",
+        "usedIn": [
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" },
+          { "name": "This site", "nameZh": "本站" }
+        ]
+      },
+      {
+        "name": "NumPy / Pandas / SymPy",
+        "nameZh": "NumPy / Pandas / SymPy",
+        "usedIn": [
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" },
+          { "name": "CUMCM modeling", "nameZh": "数学建模竞赛" }
+        ]
+      },
+      {
+        "name": "React & Next.js",
+        "nameZh": "React & Next.js",
+        "usedIn": [
+          { "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" },
+          { "name": "Luojia Tutor", "nameZh": "珞珈数智助教", "slug": "luojia-math-tutor" }
+        ]
+      },
+      {
+        "name": "Prisma",
+        "nameZh": "Prisma",
+        "usedIn": [{ "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" }]
+      },
+      {
+        "name": "ArkTS (HarmonyOS)",
+        "nameZh": "ArkTS（鸿蒙）",
+        "usedIn": [{ "name": "ProjectMemo", "nameZh": "忆程 ProjectMemo", "slug": "projectmemo" }]
+      }
     ]
   },
   {
     "category": "Math & Algorithms",
     "categoryZh": "数理算法",
     "skills": [
-      { "name": "Mathematical Analysis", "nameZh": "数学分析" },
-      { "name": "Numerical Linear Algebra", "nameZh": "数值线性代数" },
-      { "name": "Probability & Statistics", "nameZh": "概率与统计" },
-      { "name": "Machine Learning", "nameZh": "机器学习" },
-      { "name": "Deep Learning", "nameZh": "深度学习" },
-      { "name": "Mathematical Modeling", "nameZh": "数学建模" }
+      {
+        "name": "Mathematical Analysis",
+        "nameZh": "数学分析",
+        "usedIn": [{ "name": "Major courses", "nameZh": "专业课程" }]
+      },
+      {
+        "name": "Numerical Linear Algebra",
+        "nameZh": "数值线性代数",
+        "usedIn": [{ "name": "Major courses", "nameZh": "专业课程" }]
+      },
+      {
+        "name": "Probability & Statistics",
+        "nameZh": "概率与统计",
+        "usedIn": [{ "name": "CUMCM modeling", "nameZh": "数学建模竞赛" }]
+      },
+      {
+        "name": "Machine Learning",
+        "nameZh": "机器学习",
+        "usedIn": [{ "name": "DocParse", "nameZh": "文档解析大创", "slug": "docparse" }]
+      },
+      {
+        "name": "Deep Learning",
+        "nameZh": "深度学习",
+        "usedIn": [{ "name": "DocParse", "nameZh": "文档解析大创", "slug": "docparse" }]
+      },
+      {
+        "name": "Mathematical Modeling",
+        "nameZh": "数学建模",
+        "usedIn": [{ "name": "CUMCM 2025 · 2nd prize", "nameZh": "CUMCM 2025 · 省二" }]
+      }
     ]
   },
   {
     "category": "Engineering & Others",
     "categoryZh": "工程与其他",
     "skills": [
-      { "name": "Git & GitHub", "nameZh": "Git & GitHub" },
-      { "name": "CUDA / GPU Environments", "nameZh": "CUDA / GPU 环境" },
-      { "name": "Matplotlib Visualization", "nameZh": "Matplotlib 可视化" },
-      { "name": "Vite & Tailwind CSS", "nameZh": "Vite & Tailwind CSS" },
-      { "name": "English (CET-6 Passed)", "nameZh": "英语六级（通过）" }
+      {
+        "name": "Git & GitHub",
+        "nameZh": "Git & GitHub",
+        "usedIn": [{ "name": "All open-source repos", "nameZh": "全部开源仓库" }]
+      },
+      {
+        "name": "CUDA / GPU Environments",
+        "nameZh": "CUDA / GPU 环境",
+        "usedIn": [{ "name": "DocParse", "nameZh": "文档解析大创", "slug": "docparse" }]
+      },
+      {
+        "name": "Matplotlib Visualization",
+        "nameZh": "Matplotlib 可视化",
+        "usedIn": [
+          { "name": "DocParse", "nameZh": "文档解析大创", "slug": "docparse" },
+          { "name": "CUMCM modeling", "nameZh": "数学建模竞赛" }
+        ]
+      },
+      {
+        "name": "Vite & Tailwind CSS",
+        "nameZh": "Vite & Tailwind CSS",
+        "usedIn": [{ "name": "This site", "nameZh": "本站" }]
+      },
+      {
+        "name": "English (CET-6 Passed)",
+        "nameZh": "英语六级（通过）",
+        "usedIn": [{ "name": "Technical reading", "nameZh": "技术文档阅读" }]
+      }
     ]
   }
 ]

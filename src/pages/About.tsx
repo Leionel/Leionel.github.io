@@ -1,7 +1,39 @@
-import { Camera, GraduationCap, Mail, MapPin, Music2, Trophy, User } from 'lucide-react';
+import { ArrowRight, Camera, GraduationCap, Mail, MapPin, Music2, Trophy, User } from 'lucide-react';
 import personalData from '../data/personal.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal, SectionHeading, Tag } from '../components/ui';
+
+const journey = [
+  {
+    year: '2024',
+    lines: [
+      'Entered Wuhan University — Information & Computing Science (Ziqiang Class)',
+      'First Prize, National Mathematics Competition (CMC) Hubei Division',
+    ],
+    linesZh: ['进入武汉大学 信息与计算科学（自强班）', '全国大学生数学竞赛（CMC）湖北赛区 省级一等奖'],
+  },
+  {
+    year: '2025',
+    lines: [
+      'Second Prize, CUMCM mathematical modeling (Hubei)',
+      'Joined the multimodal document-understanding program',
+      'First agent project: Luojia Digital Math Assistant',
+    ],
+    linesZh: ['全国大学生数学建模竞赛（CUMCM）湖北赛区 省级二等奖', '加入多模态文档理解大创项目', '第一个智能体项目：珞珈数智助教'],
+  },
+  {
+    year: '2026',
+    lines: [
+      'First Prize, WHU 1st "Volcano Cup" Agent Innovation Competition',
+      'ProjectMemo advanced to the C4-AI semifinal',
+      'Opened the Math Modeling Evidence Harness — focus converged on agent reliability',
+    ],
+    linesZh: ['武汉大学首届「火山杯」智能体创新大赛 一等奖', '忆程 ProjectMemo 晋级 C4-AI 复赛', '开源数模证据 Harness——方向收敛到智能体可靠性'],
+  },
+];
+
+const chainZh = ['数学基础', '机器学习', '数学推理', '智能体系统', '可靠性 · Harness'];
+const chainEn = ['Mathematics', 'ML', 'Math reasoning', 'Agent systems', 'Reliability · Harness'];
 
 const About = () => {
   const { isZh } = useLanguage();
@@ -156,6 +188,52 @@ const About = () => {
                 </dd>
               </div>
             </dl>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* --------------------------- Journey ------------------------------ */}
+      <section>
+        <SectionHeading
+          eyebrow={isZh ? '历程' : 'Journey'}
+          title={isZh ? '方向是怎么长出来的' : 'How the direction took shape'}
+        />
+        <Reveal className="mt-8">
+          <div className="rounded-3xl border border-edge bg-card p-7 sm:p-9">
+            <ol className="space-y-7">
+              {journey.map((j) => (
+                <li key={j.year} className="flex gap-6">
+                  <span className="w-12 shrink-0 pt-0.5 font-mono text-sm font-bold text-indigo-500 dark:text-indigo-400">
+                    {j.year}
+                  </span>
+                  <ul className="space-y-1.5 border-l border-edge pl-5">
+                    {(isZh ? j.linesZh : j.lines).map((line) => (
+                      <li key={line} className="text-sm leading-relaxed text-ink-muted">
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-edge pt-6">
+              {(isZh ? chainZh : chainEn).map((c, i) => (
+                <span key={c} className="flex items-center gap-2">
+                  {i > 0 && <ArrowRight className="h-3.5 w-3.5 text-edge-strong" />}
+                  <span
+                    className={
+                      'rounded-full px-3 py-1 text-xs font-medium ' +
+                      (i === (isZh ? chainZh : chainEn).length - 1
+                        ? 'bg-gradient-to-r from-indigo-500/15 to-violet-500/15 text-indigo-600 ring-1 ring-inset ring-indigo-500/25 dark:text-indigo-300'
+                        : 'bg-card-muted text-ink-muted')
+                    }
+                  >
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
           </div>
         </Reveal>
       </section>

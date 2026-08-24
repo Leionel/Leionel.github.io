@@ -1,0 +1,203 @@
+{
+  "projectmemo": {
+    "problem": "Course projects, research training, and competitions generate a constant stream of paper notes, experiment results, error logs, meeting conclusions, and material requirements — all scattered across chats, docs, and personal notes. The older a project gets, the harder it becomes to answer: why was this decided? Was that risk handled? What's next? And near every deadline, the digging and re-assembling starts over. Generic AI Q&A generates in one shot but holds no stable project memory and can't say which historical record a suggestion came from.",
+    "problemZh": "大学生在课程设计、科研训练和学科竞赛里持续产生论文笔记、实验结果、代码报错、会议结论和材料要求。这些碎片散落在聊天记录、文档和个人笔记里，项目越久越难回答：当时为什么这样决定？风险处理了吗？下一步做什么？临近截止又要重新翻找、整理、拼装材料。通用 AI 问答擅长一次性生成，却没有稳定的项目记忆，也说不清建议来自哪条历史记录。",
+    "role": "Team leader & product owner. I set the product boundary and the agent interaction principle (\"proactive but never overreaching\"), designed the fragment-to-card structuring pipeline and the intervention loop, built the Next.js/Prisma data model, and enforced the \"must demo offline\" engineering constraint.",
+    "roleZh": "队长 & 负责人：定产品边界与 Agent 交互原则（「主动但不越权」），设计碎片结构化管线与主动介入闭环，搭建 Next.js/Prisma 数据模型，并执行「离线必须可演示」的工程约束。",
+    "system": "Three layers. The application layer owns project isolation, input validation, rule triggers, tool whitelists, and database transactions; LLMs appear only as structuring/generation nodes and never write data directly. Incoming fragments are structured into knowledge cards (summary, keywords, tasks, importance, next step), linked to history with original-text references. A context event engine runs five rule-based triggers after project access or data changes (deadlines, unresolved risks, stagnation, experiment gaps, material gaps); hits become evidence-backed interventions, which the user confirms into action items whose completion writes back as reflection cards.",
+    "systemZh": "系统分三层。应用层负责项目隔离、输入校验、规则触发、工具白名单与数据库事务；LLM 只作为结构化/生成节点，从不直接写数据。碎片进入后先被结构化为知识卡片（摘要、关键词、任务、重要性、下一步），与历史卡片关联并保留原文引用。上下文事件引擎在项目访问或数据变更后运行五类规则触发器（截止日期、风险、停滞、实验缺口、材料缺口），命中后生成带证据的主动介入，用户确认后落地为行动项，完成结果自动回写为复盘卡片。",
+    "flow": ["碎片捕获", "结构化卡片", "关联检索", "主动介入", "确认行动", "复盘回写"],
+    "flowEn": ["Capture", "Structure", "Link", "Intervene", "Confirm", "Reflect"],
+    "decisions": [
+      {
+        "alt": "Let the LLM drive memory writes and reminders directly — the common agent shape.",
+        "altZh": "让 LLM 直接驱动记忆写入与主动提醒（常见的 Agent 形态）。",
+        "choice": "LLMs are structuring/generation nodes only; writes, validation, tool whitelists and transactions all live in the application layer.",
+        "choiceZh": "LLM 只做结构化/生成节点；写入、校验、工具白名单与事务全部收在应用层。",
+        "why": "Model timeouts, malformed JSON, or missing keys can never corrupt data or block a demo — the pipeline falls back to a deterministic mock, and every intervention stays traceable to its evidence cards.",
+        "whyZh": "模型超时、非法 JSON、无密钥都不能破坏数据或打断演示——管线回退确定性 mock，且每条介入都能溯源到证据卡片。"
+      },
+      {
+        "alt": "Pure embedding retrieval for memory linking.",
+        "altZh": "用纯向量检索做记忆关联。",
+        "choice": "A VectorStore abstraction with keyword-intersection scoring, keeping the top-3 related cards with original-text references.",
+        "choiceZh": "VectorStore 抽象 + 关键词交集计分，保留 top-3 相关卡片与原文引用。",
+        "why": "Student fragments hinge on exact tokens — course codes, dates, error messages. Keyword intersection is explainable and traceable, and the abstraction keeps the door open for hybrid retrieval later.",
+        "whyZh": "学生碎片里课程名、日期、报错信息这类精确 token 至关重要；关键词交集可解释、可追溯，抽象层也为后续混合检索留了接口。"
+      },
+      {
+        "alt": "Let the agent act on risks directly — more \"autonomous\".",
+        "altZh": "让 Agent 发现风险后直接执行——看起来更「自动」。",
+        "choice": "Every intervention carries its trigger reason and cited evidence; the user picks accept / later / dismiss, and only acceptance creates an action item.",
+        "choiceZh": "每条介入必须带触发原因与引用证据；用户在 接受 / 稍后 / 忽略 中三选一，只有接受才会生成行动项。",
+        "why": "\"Proactive but never overreaching\": writes require confirmation, and completion receipts write back as reflection cards — an explainable closed loop instead of a black box.",
+        "whyZh": "「主动但不越权」：写操作必须确认；完成结果回写为复盘卡——是可解释的闭环，而不是黑箱。"
+      },
+      {
+        "alt": "OS-level background push notifications.",
+        "altZh": "操作系统级的后台推送提醒。",
+        "choice": "A context event engine that runs triggers on project access and data changes.",
+        "choiceZh": "上下文事件引擎：在项目访问与数据变更后运行触发器。",
+        "why": "For a single-user demo, claiming OS-level push would overstate the system. Event-driven triggering covers the real usage scenes — and keeps the claim honest.",
+        "whyZh": "单用户 Demo 阶段宣称 OS 级推送就是夸大；事件驱动已覆盖真实使用场景，且口径诚实。"
+      }
+    ],
+    "failures": [
+      "An early flowchart included \"assignee\" fields for actions — but a single-user demo has no real roles, and the field stayed empty. We cut it from the current-capability list entirely; it survives only as a marked extension point for team collaboration.",
+      "The first reminder implementation rendered in-page and vanished on refresh. Interventions are now persisted (AgentIntervention) with per-project dedup keys, so \"later / dismiss\" states survive reloads and never nag twice.",
+      "Demo data initially risked blending into effect metrics. Simulated scenarios now carry an explicit mock flag and are excluded from real metrics — demo honesty is enforced by schema, not by discipline.",
+      "Early versions relied on live model calls, which meant any demo could break on network or keys. The pipeline was rebuilt mock-first: the OpenAI-compatible provider is optional, never a prerequisite."
+    ],
+    "failuresZh": [
+      "早期流程图画进了「负责人分配」，但单用户 Demo 没有真实角色，字段落了空——最终从当前能力清单中删掉，只保留为团队协作扩展位。",
+      "第一版提醒只在页面内渲染，刷新即丢。现在介入被持久化（AgentIntervention）并带项目内去重键，「稍后 / 忽略」状态可保存，也不会重复打扰。",
+      "演示数据一度可能混进效果指标。现在模拟情境带显式 mock 标记并从真实指标中剔除——演示诚实靠 schema 保证，不靠自觉。",
+      "早期版本依赖在线模型，任何一次演示都可能被网络或密钥打断。管线重构为 mock-first：OpenAI-compatible 是可选 Provider，不是前提。"
+    ],
+    "status": "Semifinalist at C4-AI 2026. The web demo runs fully offline: fragment structuring, knowledge linking, action board, proactive reminders, citation-backed copilot, and six deliverable types (weekly report, entry doc, defense slides, README, résumé blurb, next-week plan) are all implemented. Xiaoyi Workflow integration is interface-reserved only; voice, images, and background push are on the roadmap.",
+    "statusZh": "C4-AI 2026 已晋级复赛。Web Demo 完全离线可演示：碎片结构化、知识关联、行动板、主动提醒、带引用的记忆副驾驶与六类成果生成（周报、作品说明、答辩 PPT、README、简历描述、行动计划）均已实现。小艺 Workflow 仅预留接口；语音、图片与后台提醒在后续路线。"
+  },
+
+  "math-model-harness": {
+    "problem": "In math-modeling competitions, using AI is practically unavoidable — but \"where did this result come from, where was AI involved, and can the paper be reproduced\" usually can't be answered. This harness turns a competition project into a manifest-driven pipeline: artifact DAGs, verification gates, and auditable AI-usage disclosure, so evidence comes before conclusions.",
+    "problemZh": "数学建模竞赛里几乎不可能不用 AI，但「结果怎么来的、AI 用在哪、论文能不能复现」往往说不清。这个 Harness 把一场比赛变成由清单驱动的流水线：工件 DAG、验证门禁、可审计的 AI 使用披露——让证据先于结论。",
+    "role": "Solo developer. I designed the v2 data model and CLI state machine, wrote the AI-ledger and gate rules, and built the deterministic projections and run receipts.",
+    "roleZh": "独立开发：设计 v2 数据模型与 CLI 状态机，制定 AI 台账与门禁规则，实现确定性投影与运行回执。",
+    "system": "harness.py is the single entry point: init / status / prepare / check drive a project through milestones (M1 → … → S1). init writes only four minimal files (competition_profile, run_manifest, artifact_dag, run_index); the project stays parked at M1 until the problem statement, data boundary, model contract, verification plan, and human confirmation are all real. Every `run` captures a receipt — stdout, stderr, and exit code. `prepare` generates projection documents (MODELING_PLAN, PAPER_OUTLINE, AI_USAGE_LEDGER, …), each listing the SHA-256 of its source files.",
+    "systemZh": "harness.py 是唯一入口：init / status / prepare / check 驱动项目按里程碑（M1 → … → S1）推进。init 只写四个最小文件（competition_profile / run_manifest / artifact_dag / run_index），项目停在 M1，直到题面、数据边界、模型合同、验证计划与人工确认全部落实。每次 run 都捕获回执——stdout、stderr 与退出码。prepare 生成投影文档（MODELING_PLAN、PAPER_OUTLINE、AI_USAGE_LEDGER 等），每份都列出源文件的 SHA-256。",
+    "flow": ["init 建档", "prepare 投影", "run + 回执", "AI 台账", "check 门禁"],
+    "flowEn": ["init", "prepare", "run + receipt", "AI ledger", "check gates"],
+    "decisions": [
+      {
+        "alt": "Generate a full set of template files at init so the project \"looks complete\".",
+        "altZh": "init 生成全套模板文件，让项目「看起来很完整」。",
+        "choice": "v2 init writes only four minimal files; everything else is generated per-milestone by prepare.",
+        "choiceZh": "v2 的 init 只写四个最小文件；其余全部由 prepare 按里程碑生成。",
+        "why": "Dozens of empty JSON files create an illusion of progress. Files must come from real inputs — the project stays parked at M1 until the problem and verification plan actually exist.",
+        "whyZh": "几十个空 JSON 制造完成度的幻觉。文件必须来自真实输入——项目停在 M1，直到题面与验证计划真实存在。"
+      },
+      {
+        "alt": "Infer \"no AI used\" from an empty usage log.",
+        "altZh": "从「AI 使用记录为空」推断「未使用 AI」。",
+        "choice": "AI-usage state starts as unknown; confirm-none requires a human, a name, and a reason; unverified records block formal gates.",
+        "choiceZh": "AI 使用状态从 unknown 起步；confirm-none 必须由人给出署名与理由；未核验记录直接阻断正式 Gate。",
+        "why": "An empty array is not evidence of non-use. Compliance statements can only be made by a person — the machine doesn't answer for you.",
+        "whyZh": "空数组不等于没用过。合规声明只能由人作出——机器不代答。"
+      },
+      {
+        "alt": "Let people hand-edit the projected Markdown to \"pass\" checks.",
+        "altZh": "允许手改投影 Markdown 来「通过」检查。",
+        "choice": "Projections list their source-file SHA-256; hand edits never pass a gate — change the source, re-project.",
+        "choiceZh": "投影文档列出源文件 SHA-256；手改不会让 Gate 通过——改源头，重新投影。",
+        "why": "A projection must be a deterministic function of the project state. Otherwise documents drift from reality and the audit is worthless.",
+        "whyZh": "投影必须是项目状态的确定性函数；否则文档与事实漂移，审计失去意义。"
+      },
+      {
+        "alt": "Have prepare S1 produce a \"final submission\".",
+        "altZh": "让 prepare S1 直接产出「最终提交版」。",
+        "choice": "S1 only creates a mutable staging area and a disclosure draft; the harness never claims \"submission ready\".",
+        "choiceZh": "S1 只创建可变的 staging 与 disclosure 草稿；Harness 永不自动宣称「可提交」。",
+        "why": "Uploading to the competition portal is a human's button to press. The harness doesn't submit homework for you.",
+        "whyZh": "上传比赛门户的按钮永远由人来按。Harness 不替你交作业。"
+      }
+    ],
+    "failures": [
+      "v1's init sprawled dozens of empty JSON files — it looked like engineering but was all placeholders. v2 cut it back to four minimal files, and everything empty became milestone-gated generation.",
+      "The AI ledger was first treated as a plain log field. Then it became clear that \"AI was not used\" is itself a claim that needs evidence — hence the unknown initial state, human confirm-none, and gates that stay blocked until verification.",
+      "An early temptation was to treat \"tests pass\" as proof of capability. The constraint is now written into the tool itself: the harness doesn't guess problems, fake results, or count tests as award-worthy evidence — it checks the evidence chain, not luck."
+    ],
+    "failuresZh": [
+      "v1 的 init 会铺开几十个空 JSON 文件——看起来工程浩大，实际全是占位符。v2 砍回四个最小文件，所有空模板改为按里程碑生成。",
+      "AI 台账最初只是普通日志字段。后来意识到「未使用 AI」本身就是一个需要证据的声明——于是有了 unknown 初始态、人工 confirm-none，以及核验完成前保持阻断的正式 Gate。",
+      "早期有过把「测试通过」当能力证明的冲动。这条约束现在写进了工具本身：Harness 不猜题、不伪造结果、不把测试当奖项证据——它检查的是证据链，不是运气。"
+    ],
+    "status": "Active open-source project (since Aug 2026). Currently supports competition profiles (CUMCM etc.), milestone gates, the AI ledger synced to AI_USAGE_LEDGER.md, run receipts, and projection documents. A distributable wheel bundling schemas/references/assets is future platform work.",
+    "statusZh": "持续开发的开源项目（2026.8 起）。当前支持比赛画像（CUMCM 等）、里程碑门禁、同步到 AI_USAGE_LEDGER.md 的 AI 台账、运行回执与投影文档。打包 schemas/references/assets 的发布型 wheel 属于后续平台化工作。"
+  },
+
+  "luojia-math-tutor": {
+    "problem": "Generic LLM tutoring has two failure modes: the urge to hand over full answers (killing the student's chance to think), and hallucinated logic — one wrong intermediate step in a calculus derivation collapses everything after it. Luojia Tutor separates \"teaching\" from \"verification\" and rebuilds Q&A as a verifiable, adaptive learning agent.",
+    "problemZh": "通用大模型辅导数学有两个死穴：倾向于直接交出完整答案（剥夺学生思考机会），以及逻辑幻觉——微积分推导中间错一步，后面全部崩塌。珞珈数智助教把「教学」与「验证」职责剥离，把问答重构成可验证的自适应学习智能体。",
+    "role": "Team leader & principal investigator (WHU Volcano Cup entry). I defined the teaching/verification separation principle, designed the LangGraph scheduling and latency budgets, and co-built the math knowledge base and evaluation set.",
+    "roleZh": "队长 & 负责人（火山杯作品）：定「教学/验证分离」原则，设计 LangGraph 调度与延迟预算，参与数学知识库与评测数据集建设。",
+    "system": "FastAPI + LangGraph backend, Next.js frontend. Each request hits a local fast-path router: the opening targets <150ms; session history, BKT mastery, BM25 retrieval, and on-demand SymPy checks share a 350ms fast-context deadline. A verification gate then routes: ordinary teaching goes to a single streaming Teacher call; complex proofs or locally-unverifiable steps escalate to a Verifier LLM. Normal requests hold llm_call_count == 1; high-risk verification stays ≤ 2.",
+    "systemZh": "FastAPI + LangGraph 后端、Next.js 前端。每个请求先经本地快路径路由：Opening 目标 <150ms；会话历史、BKT 掌握度、BM25 检索与按需 SymPy 校验共享 350ms 快速上下文截止时间。随后验证门禁分流：普通教学走一次 Teacher 流式调用；复杂证明或本地无法判定的步骤升级 Verifier LLM。普通请求 llm_call_count == 1，高风险验证 ≤ 2。",
+    "flow": ["学生请求", "Opening <150ms", "快路径路由", "快速上下文 350ms", "验证门禁", "Teacher / Examiner / Verifier"],
+    "flowEn": ["Request", "Opening <150ms", "Fast router", "Fast context 350ms", "Verify gate", "Teacher / Examiner / Verifier"],
+    "decisions": [
+      {
+        "alt": "A classic serial pipeline: Planner → Policy → Verifier → Teacher → Examiner on every request.",
+        "altZh": "经典串行流水线：Planner → Policy → Verifier → Teacher → Examiner 每轮全跑。",
+        "choice": "LangGraph schedules on demand by risk and confidence; ordinary explanations take a single streaming Teacher call.",
+        "choiceZh": "LangGraph 按风险与置信度按需调度；普通讲解只走一次 Teacher 流式调用。",
+        "why": "Fixed serialization made every simple question queue through multiple models — latency data killed it. The fast path keeps role separation while pinning normal requests to one call.",
+        "whyZh": "固定串行让每个简单问题都要排完整条模型队列——延迟数据否定了它。快路径保留角色分工，同时把普通请求压到一次调用。"
+      },
+      {
+        "alt": "Free-form chat where the AI just solves everything.",
+        "altZh": "自由对话，AI 直接给完整解答。",
+        "choice": "Teacher guides Socratically; student steps are checked by SymPy first; only open proofs escalate to the Verifier.",
+        "choiceZh": "Teacher 负责启发式引导；学生步骤先经 SymPy 校验；只有开放证明才升级 Verifier。",
+        "why": "Autoregressive models are built to please — handing over answers is their default. Symbolic checks are deterministic, and BKT mastery steers the guidance as weaknesses emerge.",
+        "whyZh": "自回归模型的默认倾向是讨好式给答案。符号校验是确定性的，BKT 掌握度让引导随薄弱点动态调整。"
+      },
+      {
+        "alt": "Expose the model's chain-of-thought to look more \"transparent\".",
+        "altZh": "展示模型思维链，显得更「透明」。",
+        "choice": "SSE emits only four public process summaries ([PLAN] / [RAG] / [VERIFY] / [OUTPUT]); raw reasoning_content is never sent or stored.",
+        "choiceZh": "SSE 只发四类公开过程摘要（[PLAN] / [RAG] / [VERIFY] / [OUTPUT]）；原始 reasoning_content 不发送、不保存。",
+        "why": "Process state helps learners; raw chains of thought are unstable, uncontrollable, and break refresh recovery. Summaries persist, so reloading a session still shows what happened.",
+        "whyZh": "过程状态对学习者有用；原始思维链不稳定、不可控，也无法支持刷新恢复。摘要持久化后，重新进入会话仍能看到发生了什么。"
+      }
+    ],
+    "failures": [
+      "The first version ran every role serially on every request — even a simple concept question queued the whole pipeline. The latency measurements rejected that design and produced the fast-path router and hard call-count budgets.",
+      "An internal review rejected the show-the-chain-of-thought approach: uncontrollable content and no recovery after refresh. It became the four public summary events plus persisted summaries."
+    ],
+    "failuresZh": [
+      "第一版让所有角色每轮固定串行——连简单概念题都要排完整条流水线。延迟实测否定了这个设计，才有了快路径路由与硬性调用上限。",
+      "直接展示思维链的方案在内部评审被否：内容不可控、刷新后无法恢复。改为四类公开摘要事件 + 摘要持久化。"
+    ],
+    "status": "First Prize, WHU 1st \"Volcano Cup\" Agent Innovation Competition. Supports text/image input, OCR, RAG retrieval, SymPy verification, and BKT mastery tracking; latency budgets and call-count caps are enforced engineering constraints.",
+    "statusZh": "武汉大学首届「火山杯」智能体创新大赛一等奖。支持文本/图片输入、OCR、RAG 检索、SymPy 校验与 BKT 掌握度追踪；延迟预算与调用上限是写进工程的硬约束。"
+  },
+
+  "docparse": {
+    "problem": "An undergraduate innovation program on multimodal document understanding and structural parsing. On complex layouts and noisy documents, parsing models behave unstably; batch jobs that crash mid-way used to restart from zero; and quality was hard to track continuously.",
+    "problemZh": "大创项目：多模态文档理解与结构化解析。复杂版式与噪声文档下解析模型表现不稳定；批量任务中途失败往往要从头重跑；效果也难以持续度量。",
+    "role": "Core team member: GPU inference environments and dependency-conflict triage, data cleaning and synthetic-augmentation pipelines, and the evaluation loop.",
+    "roleZh": "核心队员：负责 GPU 推理环境与依赖冲突排查、数据清洗与合成增强管道、评测闭环搭建。",
+    "system": "An end-to-end parsing system with batch processing, checkpointing, and exception retry. On the data side, cleaning and synthetic-augmentation pipelines improve robustness on complex layouts; on the evaluation side, an automated multi-metric loop (mAP / F1 / BLEU / TEDS) closes the iteration cycle.",
+    "systemZh": "端到端解析系统：批量处理 + 断点续跑 + 异常重试。数据侧以清洗与合成增强管道提升复杂版式下的鲁棒性；评测侧以 mAP / F1 / BLEU / TEDS 多指标自动化闭环支撑持续迭代。",
+    "flow": ["原始文档", "GPU 解析推理", "结构化输出", "多指标评测", "数据/模型迭代"],
+    "flowEn": ["Documents", "GPU parsing", "Structured output", "Multi-metric eval", "Data/model iteration"],
+    "decisions": [
+      {
+        "alt": "One long batch process; any failure fails the whole batch.",
+        "altZh": "单进程跑批，任何失败导致整批作废。",
+        "choice": "Batch processing with checkpoints and exception retry.",
+        "choiceZh": "批处理 + checkpoint 断点续跑 + 异常重试。",
+        "why": "For long jobs, interruption cost dominates. Checkpoints turn failures from disasters into recoverable events.",
+        "whyZh": "长任务的中断代价最高。断点续跑把失败从灾难变成可恢复事件。"
+      },
+      {
+        "alt": "Ad-hoc debugging of CUDA and dependency conflicts on every machine.",
+        "altZh": "每台机器上临时排查 CUDA 与依赖冲突。",
+        "choice": "Environment setup and conflict triage codified into a repeatable configuration.",
+        "choiceZh": "把环境配置与冲突排查流程固化成可复现的配置。",
+        "why": "GPU environments were the root cause of most failures and slow runs. Codifying them made deployments reproducible and cut the failure rate.",
+        "whyZh": "GPU 环境是多数失败与慢跑的根因。固化之后部署可复现，失败率明显下降。"
+      }
+    ],
+    "failures": [
+      "Early on, dependency conflicts kept breaking runs and triage ate days. Freezing the environment into configuration finally stabilized efficiency and the failure rate.",
+      "Tracking only the headline metric hid regressions on specific layout classes. Adding the automated multi-metric loop made iteration sustainable."
+    ],
+    "failuresZh": [
+      "早期依赖冲突频繁中断运行，排查动辄数天。把环境固化成配置后，效率与失败率才真正稳定。",
+      "只看总体指标会掩盖特定版式类别上的退化。补上多指标自动化评测后，迭代才可持续。"
+    ],
+    "status": "Ongoing undergraduate innovation program (since Sep 2025). No public repository.",
+    "statusZh": "大创项目进行中（2025.9 起）。无公开仓库。"
+  }
+}

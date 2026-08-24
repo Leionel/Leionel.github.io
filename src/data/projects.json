@@ -1,6 +1,7 @@
 [
   {
     "id": 3,
+    "slug": "projectmemo",
     "name": "ProjectMemo",
     "nameZh": "忆程 ProjectMemo",
     "role": "Team Leader",
@@ -28,6 +29,7 @@
   },
   {
     "id": 4,
+    "slug": "math-model-harness",
     "name": "Math Modeling Evidence Harness",
     "nameZh": "数模证据 Harness",
     "role": "Solo Developer",
@@ -53,6 +55,7 @@
   },
   {
     "id": 2,
+    "slug": "luojia-math-tutor",
     "name": "Luojia Digital Math Assistant",
     "nameZh": "珞珈数智助教",
     "role": "Leader & Principal Investigator",
@@ -80,6 +83,7 @@
   },
   {
     "id": 1,
+    "slug": "docparse",
     "name": "Multimodal Document Understanding & Structural Parsing",
     "nameZh": "多模态文档理解与结构化解析",
     "role": "Core Member",

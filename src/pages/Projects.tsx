@@ -1,4 +1,5 @@
-import { ArrowUpRight, Check, FileText, Flag, Github, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight, Check, FileText, Flag, Github, User } from 'lucide-react';
 import personalData from '../data/personal.json';
 import projectsData from '../data/projects.json';
 import directionsData from '../data/directions.json';
@@ -64,7 +65,12 @@ const Projects = () => {
                   </div>
 
                   <h2 className="mt-4 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
-                    {isZh ? p.nameZh : p.name}
+                    <Link
+                      to={`/projects/${p.slug}`}
+                      className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
+                    >
+                      {isZh ? p.nameZh : p.name}
+                    </Link>
                   </h2>
 
                   <p className="mt-2 inline-flex items-center gap-1.5 text-[13px] text-ink-faint">
@@ -98,18 +104,27 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  {p.repo && (
-                    <a
-                      href={p.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-edge bg-card-muted px-4 py-2 text-xs font-semibold text-ink-muted transition-colors hover:border-edge-strong hover:text-ink"
+                  <div className="mt-6 flex flex-wrap items-center gap-2">
+                    <Link
+                      to={`/projects/${p.slug}`}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-semibold text-canvas transition-opacity hover:opacity-85"
                     >
-                      <Github className="h-3.5 w-3.5" />
-                      GitHub
-                      <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
-                    </a>
-                  )}
+                      {isZh ? '阅读复盘' : 'Case study'}
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                    {p.repo && (
+                      <a
+                        href={p.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-edge bg-card-muted px-4 py-2 text-xs font-semibold text-ink-muted transition-colors hover:border-edge-strong hover:text-ink"
+                      >
+                        <Github className="h-3.5 w-3.5" />
+                        GitHub
+                        <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
+                      </a>
+                    )}
+                  </div>
                 </div>
 
                 {projectImages[p.id] && (
