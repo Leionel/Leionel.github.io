@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Search, Sun, X } from 'lucide-react';
 import { useLanguage } from '../contexts/language';
 import { useTheme } from '../hooks/useTheme';
 import { cn } from '../lib/utils';
+import ThemeColorPicker from './ThemeColorPicker';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,10 @@ const Header = () => {
   const location = useLocation();
   const { isZh, toggleLanguage } = useLanguage();
   const { toggleTheme, isDark } = useTheme();
+
+  const handleOpenSearch = () => {
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
+  };
 
   const navLinks = [
     { name: isZh ? '首页' : 'Home', path: '/' },
@@ -82,7 +87,23 @@ const Header = () => {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
+          {/* Quick Search trigger (Cmd+K) */}
+          <button
+            onClick={handleOpenSearch}
+            className={cn(
+              iconBtn,
+              'relative border border-edge/60 bg-card/40 hover:border-edge-strong',
+            )}
+            title={isZh ? '全局搜索 (Cmd+K)' : 'Search (Cmd+K)'}
+            aria-label="Search"
+          >
+            <Search className="h-4 w-4" />
+          </button>
+
+          {/* Dynamic Theme Color Palette Switcher */}
+          <ThemeColorPicker />
+
           {/* Animated Theme Toggle */}
           <button
             onClick={toggleTheme}

@@ -111,9 +111,12 @@ export default function AgentNetworkCanvas({ className }: AgentNetworkCanvasProp
         ctx.clearRect(0, 0, width, height);
 
         const dark = isDarkTheme();
-        const primaryColor = dark ? '129, 140, 248' : '99, 102, 241'; // indigo
-        const accentColor = dark ? '192, 132, 252' : '168, 85, 247'; // purple
-        const glowColor = dark ? '165, 180, 252' : '129, 140, 248';
+        const comp = getComputedStyle(document.documentElement);
+        const aVal = comp.getPropertyValue('--glow-a').trim();
+        const bVal = comp.getPropertyValue('--glow-b').trim();
+        const primaryColor = aVal || (dark ? '52, 211, 153' : '16, 185, 129');
+        const accentColor = bVal || (dark ? '56, 189, 248' : '6, 182, 212');
+        const glowColor = aVal || (dark ? '110, 231, 183' : '52, 211, 153');
 
         // Connect nearby nodes and collect valid edges
         const activeEdges: { from: number; to: number }[] = [];

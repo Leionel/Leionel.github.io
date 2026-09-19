@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -9,12 +9,14 @@ import {
   Github,
   TerminalSquare,
   User,
+  ZoomIn,
 } from 'lucide-react';
 import projectsData from '../data/projects.json';
 import caseStudies from '../data/caseStudies.json';
 import personalData from '../data/personal.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal, Tag } from '../components/ui';
+import ImageLightbox from '../components/ImageLightbox';
 import pmWorkbench from '../assets/projects/pm-workbench.jpg';
 import pmIntervention from '../assets/projects/pm-intervention.jpg';
 import pmDeliverables from '../assets/projects/pm-deliverables.jpg';
@@ -116,6 +118,7 @@ const Section = ({ no, title, children }: { no: string; title: string; children:
 const ProjectCase = () => {
   const { slug } = useParams();
   const { isZh } = useLanguage();
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string; caption?: string } | null>(null);
 
   const project = projectsData.find((p) => p.slug === slug);
   const study = slug ? studies[slug] : undefined;
@@ -201,8 +204,28 @@ const ProjectCase = () => {
         </div>
 
         {sysImg && (
-          <figure className="mt-8 overflow-hidden rounded-2xl border border-edge bg-card">
-            <img src={sysImg.src} alt={isZh ? sysImg.caption.zh : sysImg.caption.en} loading="lazy" className="w-full object-contain" />
+          <figure
+            onClick={() =>
+              setLightbox({
+                src: sysImg.src,
+                alt: isZh ? sysImg.caption.zh : sysImg.caption.en,
+                caption: isZh ? sysImg.caption.zh : sysImg.caption.en,
+              })
+            }
+            className="group mt-8 cursor-pointer overflow-hidden rounded-2xl border border-edge bg-card shadow-sm transition-all hover:border-edge-strong hover:shadow-md"
+          >
+            <div className="relative overflow-hidden">
+              <img
+                src={sysImg.src}
+                alt={isZh ? sysImg.caption.zh : sysImg.caption.en}
+                loading="lazy"
+                className="w-full object-contain transition-transform duration-500 group-hover:scale-[1.01]"
+              />
+              <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-zinc-950/70 px-3 py-1 text-xs text-white backdrop-blur-md opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <ZoomIn className="h-3.5 w-3.5" />
+                {isZh ? '点击放大' : 'Click to zoom'}
+              </span>
+            </div>
             <figcaption className="border-t border-edge px-5 py-3 text-xs text-ink-faint">
               {isZh ? sysImg.caption.zh : sysImg.caption.en}
             </figcaption>
@@ -294,8 +317,18 @@ const ProjectCase = () => {
         {images && (
           <div className={`mt-6 grid gap-5 ${images.length > 1 ? 'sm:grid-cols-2' : 'sm:max-w-md'}`}>
             {images.map((img) => (
-              <figure key={img.caption.en} className={img.wide ? 'sm:col-span-2' : ''}>
-                <div className="overflow-hidden rounded-2xl border border-edge bg-card shadow-sm group">
+              <figure
+                key={img.caption.en}
+                onClick={() =>
+                  setLightbox({
+                    src: img.src,
+                    alt: isZh ? img.caption.zh : img.caption.en,
+                    caption: isZh ? img.caption.zh : img.caption.en,
+                  })
+                }
+                className={`group cursor-pointer ${img.wide ? 'sm:col-span-2' : ''}`}
+              >
+                <div className="relative overflow-hidden rounded-2xl border border-edge bg-card shadow-sm transition-all hover:border-edge-strong hover:shadow-md">
                   <img
                     src={img.src}
                     alt={isZh ? img.caption.zh : img.caption.en}
@@ -307,6 +340,10 @@ const ProjectCase = () => {
                       ' transition-transform duration-500 ease-out group-hover:scale-[1.02]'
                     }
                   />
+                  <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-zinc-950/70 px-3 py-1 text-xs text-white backdrop-blur-md opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <ZoomIn className="h-3.5 w-3.5" />
+                    {isZh ? '点击放大' : 'Click to zoom'}
+                  </span>
                 </div>
                 <figcaption className="mt-2 text-xs leading-relaxed text-ink-faint">
                   {isZh ? img.caption.zh : img.caption.en}
@@ -395,6 +432,14 @@ const ProjectCase = () => {
           </Link>
         </div>
       </Section>
+
+      {/* Lightbox Modal */}
+      <ImageLightbox
+        src={lightbox?.src || null}
+        alt={lightbox?.alt || ''}
+        caption={lightbox?.caption}
+        onClose={() => setLightbox(null)}
+      />
     </div>
   );
 };

@@ -16,7 +16,7 @@
     />
     <meta property="og:type" content="website" />
     <script>
-      // Apply the persisted theme before first paint to avoid a flash.
+      // Apply the persisted theme and accent color before first paint to avoid a flash.
       try {
         var t = localStorage.getItem('theme');
         if (t !== 'light' && t !== 'dark') {
@@ -24,6 +24,9 @@
         }
         document.documentElement.classList.add(t);
         document.documentElement.style.colorScheme = t;
+
+        var a = localStorage.getItem('accent-theme') || 'emerald';
+        document.documentElement.setAttribute('data-accent', a);
       } catch (e) {}
     </script>
     <script type="module">
