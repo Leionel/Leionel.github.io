@@ -87,12 +87,24 @@ body::after {
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgb(var(--glow-a) / 0.09),
-    rgb(var(--glow-b) / 0.05) 45%,
+    rgb(var(--glow-a) / 0.12),
+    rgb(var(--glow-b) / 0.06) 45%,
     transparent 70%
   );
-  filter: blur(48px);
+  filter: blur(52px);
   pointer-events: none;
+  animation: ambient-glow 14s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-glow {
+  0% {
+    transform: translateX(-50%) scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.08) translateY(15px);
+    opacity: 1;
+  }
 }
 
 #root {
@@ -185,6 +197,100 @@ html.dark .text-gradient {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
+}
+
+/* -------------------- Interactive & Animation Utilities ------------------- */
+
+/* Spotlight card with dynamic radial hover glow */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    520px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgb(var(--glow-a) / 0.12),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Glass panel */
+.glass-panel {
+  background: rgb(var(--c-card) / 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(var(--c-edge) / 0.8);
+}
+
+/* Text Shimmer */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--c-ink)) 0%,
+    rgb(var(--glow-a)) 25%,
+    rgb(var(--glow-b)) 50%,
+    rgb(var(--c-ink)) 100%
+  );
+  background-size: 250% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Subtle border beam highlight */
+@keyframes border-beam-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.border-beam-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-beam-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 280deg,
+    rgb(var(--glow-a) / 0.7) 320deg,
+    rgb(var(--glow-b)) 350deg,
+    transparent 360deg
+  );
+  animation: border-beam-sweep 10s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.border-beam-inner {
+  position: relative;
+  z-index: 1;
+  background: rgb(var(--c-card));
+  border-radius: calc(inherit - 1px);
 }
 
 /* ------------------------- Markdown body (notes) -------------------------- */

@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, NotebookPen } from 'lucide-react';
+import { ArrowUpRight, NotebookPen, Clock } from 'lucide-react';
 import { notes } from '../lib/notes';
 import { useLanguage } from '../contexts/language';
 import { Reveal, Tag } from '../components/ui';
+import SpotlightCard from '../components/SpotlightCard';
 
 const Notes = () => {
   const { isZh } = useLanguage();
@@ -41,24 +42,30 @@ const Notes = () => {
         <div className="space-y-4">
           {notes.map((note, i) => (
             <Reveal key={note.slug} delay={i * 60}>
-              <Link
-                to={`/notes/${note.slug}`}
-                className="group block rounded-2xl border border-edge bg-card p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-edge-strong hover:shadow-lg hover:shadow-zinc-950/[0.05] sm:p-8"
-              >
-                <div className="flex flex-wrap items-center gap-2.5">
-                  {note.direction && (
-                    <Tag className="border-indigo-500/25 bg-indigo-500/[0.07] text-indigo-600 dark:text-indigo-300">
-                      {note.direction}
-                    </Tag>
-                  )}
-                  {note.date && <span className="font-mono text-xs text-ink-faint">{note.date}</span>}
-                  <ArrowUpRight className="ml-auto h-4 w-4 text-ink-faint transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-indigo-500 dark:group-hover:text-indigo-400" />
-                </div>
-                <h2 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400 sm:text-xl">
-                  {note.title}
-                </h2>
-                <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-ink-muted">{note.excerpt}</p>
-              </Link>
+              <SpotlightCard className="transition-all duration-300 hover:-translate-y-1">
+                <Link
+                  to={`/notes/${note.slug}`}
+                  className="group block p-6 sm:p-8"
+                >
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    {note.direction && (
+                      <Tag className="border-indigo-500/25 bg-indigo-500/[0.07] text-indigo-600 dark:text-indigo-300">
+                        {note.direction}
+                      </Tag>
+                    )}
+                    {note.date && <span className="font-mono text-xs text-ink-faint">{note.date}</span>}
+                    <span className="inline-flex items-center gap-1 font-mono text-xs text-ink-faint">
+                      <Clock className="h-3 w-3" />
+                      {isZh ? '约 5 分钟阅读' : '5 min read'}
+                    </span>
+                    <ArrowUpRight className="ml-auto h-4 w-4 text-ink-faint transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-indigo-500 dark:group-hover:text-indigo-400" />
+                  </div>
+                  <h2 className="mt-4 text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400 sm:text-xl">
+                    {note.title}
+                  </h2>
+                  <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-ink-muted">{note.excerpt}</p>
+                </Link>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

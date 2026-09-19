@@ -1,7 +1,8 @@
-import { Medal } from 'lucide-react';
+import { Award, Medal, Trophy } from 'lucide-react';
 import awardsData from '../data/awards.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal } from '../components/ui';
+import SpotlightCard from '../components/SpotlightCard';
 
 const Awards = () => {
   const { isZh } = useLanguage();
@@ -21,41 +22,51 @@ const Awards = () => {
       </Reveal>
 
       <section className="relative">
-        <div className="absolute bottom-3 left-[7px] top-3 w-px bg-edge sm:left-[9px]" aria-hidden />
-        <ol className="space-y-10">
+        {/* Luminous timeline stem */}
+        <div
+          className="absolute bottom-3 left-[9px] top-3 w-[2px] bg-gradient-to-b from-indigo-500 via-violet-500/40 to-edge sm:left-[11px]"
+          aria-hidden
+        />
+        <ol className="space-y-8">
           {awardsData.map((award, i) => {
             const first = /First|一等/.test(award.award + award.awardZh);
             return (
               <li key={award.id}>
                 <Reveal delay={i * 80}>
                   <div className="relative flex gap-6 sm:gap-8">
+                    {/* Node on timeline */}
                     <span
-                      className="relative z-10 mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 border-indigo-500 bg-canvas sm:h-5 sm:w-5"
+                      className="relative z-10 mt-2 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-indigo-500 bg-canvas sm:h-6 sm:w-6 shadow-sm"
                       aria-hidden
                     >
-                      <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                      {i === 0 && (
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-60" />
+                      )}
+                      <span className="h-2 w-2 rounded-full bg-indigo-500 shadow-sm shadow-indigo-500" />
                     </span>
 
-                    <div className="min-w-0 flex-1 rounded-2xl border border-edge bg-card p-6 transition-colors hover:border-edge-strong sm:p-8">
-                      <div className="flex flex-wrap items-start justify-between gap-3">
+                    <SpotlightCard className="min-w-0 flex-1 p-6 transition-all duration-300 hover:-translate-y-1 sm:p-8">
+                      <div className="flex flex-wrap items-start justify-between gap-4">
                         <div className="min-w-0">
-                          <p className="font-mono text-xs text-ink-faint">{isZh ? award.dateZh : award.date}</p>
-                          <h2 className="mt-2 text-lg font-semibold leading-snug tracking-tight text-ink sm:text-xl">
+                          <p className="font-mono text-xs font-semibold text-indigo-500 dark:text-indigo-400">
+                            {isZh ? award.dateZh : award.date}
+                          </p>
+                          <h2 className="mt-2 text-lg font-bold leading-snug tracking-tight text-ink sm:text-xl">
                             {isZh ? award.nameZh : award.name}
                           </h2>
                         </div>
                         <span
                           className={
                             first
-                              ? 'inline-flex shrink-0 items-center gap-1.5 rounded-full bg-indigo-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm shadow-indigo-500/30'
-                              : 'inline-flex shrink-0 items-center gap-1.5 rounded-full bg-card-muted px-3.5 py-1.5 text-xs font-semibold text-ink-muted ring-1 ring-inset ring-edge'
+                              ? 'inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-1.5 text-xs font-bold text-white shadow-md shadow-amber-500/25 transition-transform hover:scale-105'
+                              : 'inline-flex shrink-0 items-center gap-1.5 rounded-full border border-edge bg-card-muted/80 px-3.5 py-1.5 text-xs font-semibold text-ink-muted'
                           }
                         >
-                          <Medal className="h-3.5 w-3.5" />
+                          {first ? <Trophy className="h-3.5 w-3.5" /> : <Medal className="h-3.5 w-3.5" />}
                           {isZh ? award.awardZh : award.award}
                         </span>
                       </div>
-                    </div>
+                    </SpotlightCard>
                   </div>
                 </Reveal>
               </li>

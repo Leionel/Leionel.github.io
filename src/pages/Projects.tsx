@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Check, FileText, Flag, Github, User } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, FileText, Flag, Github, Sparkles, User } from 'lucide-react';
 import personalData from '../data/personal.json';
 import projectsData from '../data/projects.json';
 import directionsData from '../data/directions.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal, SectionHeading, Tag } from '../components/ui';
+import SpotlightCard from '../components/SpotlightCard';
 import projectMemoPreview from '../assets/projectmemo-preview.jpg';
 
 const projectImages: Record<number, string> = { 3: projectMemoPreview };
@@ -20,8 +22,24 @@ const papers = [
   },
 ];
 
+const categories = [
+  { id: 'all', labelZh: '全部项目', labelEn: 'All Projects' },
+  { id: 'agent', labelZh: '智能体系统', labelEn: 'Agent Systems' },
+  { id: 'harness', labelZh: 'Harness & 开源', labelEn: 'Harness & Tools' },
+  { id: 'competition', labelZh: '竞赛实践', labelEn: 'Competitions' },
+];
+
 const Projects = () => {
   const { isZh } = useLanguage();
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  const filteredProjects = projectsData.filter((p) => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'agent') return p.tags.some(t => /agent/i.test(t));
+    if (activeFilter === 'harness') return p.tags.some(t => /harness|cli|python/i.test(t));
+    if (activeFilter === 'competition') return Boolean(p.status) || /cup|c4|大赛|竞赛/i.test(p.type + p.typeZh);
+    return true;
+  });
 
   return (
     <div className="space-y-24 md:space-y-32">
@@ -35,17 +53,37 @@ const Projects = () => {
         </h1>
         <p className="mt-4 text-base leading-relaxed text-ink-muted sm:text-lg">
           {isZh
-            ? '从竞赛作品到科研项目，每一个都在认真做。'
-            : 'From competition entries to research programs — each one built with intent.'}
+            ? '从竞赛作品到科研项目，围绕可靠的智能体执行环境与工具验证落地。'
+            : 'From competition entries to research programs — grounded in reliable agent harnesses and tool verification.'}
         </p>
+
+        {/* Filter pills */}
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          {categories.map((c) => {
+            const active = activeFilter === c.id;
+            return (
+              <button
+                key={c.id}
+                onClick={() => setActiveFilter(c.id)}
+                className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+                  active
+                    ? 'bg-ink text-canvas shadow-sm shadow-zinc-950/10 scale-[1.02]'
+                    : 'border border-edge/80 bg-card text-ink-muted hover:border-edge-strong hover:text-ink'
+                }`}
+              >
+                {isZh ? c.labelZh : c.labelEn}
+              </button>
+            );
+          })}
+        </div>
       </Reveal>
 
       {/* ----------------------------- Projects ---------------------------- */}
       <section className="space-y-6">
-        {projectsData.map((p, i) => (
+        {filteredProjects.map((p, i) => (
           <Reveal key={p.id} delay={i * 60}>
-            <article className="group relative overflow-hidden rounded-3xl border border-edge bg-card p-7 transition-all duration-300 hover:border-edge-strong hover:shadow-xl hover:shadow-zinc-950/[0.06] sm:p-10">
-              <span className="pointer-events-none absolute right-7 top-6 font-mono text-5xl font-bold text-ink/[0.04] transition-colors group-hover:text-indigo-500/10 sm:right-10 sm:text-6xl">
+            <SpotlightCard className="group relative overflow-hidden rounded-3xl p-7 sm:p-10 transition-all duration-300 hover:-translate-y-1">
+              <span className="pointer-events-none absolute right-7 top-6 font-mono text-5xl font-bold text-ink/[0.04] transition-colors duration-300 group-hover:text-indigo-500/10 sm:right-10 sm:text-6xl">
                 {String(i + 1).padStart(2, '0')}
               </span>
 
@@ -64,7 +102,7 @@ const Projects = () => {
                     <span className="font-mono text-xs text-ink-faint">{isZh ? p.periodZh : p.period}</span>
                   </div>
 
-                  <h2 className="mt-4 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+                  <h2 className="mt-4 text-xl font-bold tracking-tight text-ink transition-colors sm:text-2xl">
                     <Link
                       to={`/projects/${p.slug}`}
                       className="transition-colors hover:text-indigo-600 dark:hover:text-indigo-400"
@@ -92,7 +130,7 @@ const Projects = () => {
                       {(isZh ? p.detailsZh : p.details).map((d, j) => (
                         <li key={j} className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-muted">
                           <Check className="mt-0.5 h-4 w-4 shrink-0 text-indigo-500 dark:text-indigo-400" />
-                          {d}
+                          <span>{d}</span>
                         </li>
                       ))}
                     </ul>
@@ -100,14 +138,14 @@ const Projects = () => {
 
                   <div className="mt-6 flex flex-wrap items-center gap-1.5">
                     {p.tags.map((t) => (
-                      <Tag key={t}>{t}</Tag>
+                      <Tag key={t} className="transition-colors group-hover:border-edge-strong">{t}</Tag>
                     ))}
                   </div>
 
-                  <div className="mt-6 flex flex-wrap items-center gap-2">
+                  <div className="mt-7 flex flex-wrap items-center gap-2.5">
                     <Link
                       to={`/projects/${p.slug}`}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-semibold text-canvas transition-opacity hover:opacity-85"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-semibold text-canvas transition-all duration-200 hover:opacity-85 hover:scale-[1.02] active:scale-[0.98]"
                     >
                       {isZh ? '阅读复盘' : 'Case study'}
                       <ArrowRight className="h-3 w-3" />
@@ -117,11 +155,11 @@ const Projects = () => {
                         href={p.repo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-full border border-edge bg-card-muted px-4 py-2 text-xs font-semibold text-ink-muted transition-colors hover:border-edge-strong hover:text-ink"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-edge bg-card-muted/80 px-4 py-2 text-xs font-semibold text-ink-muted transition-all duration-200 hover:border-edge-strong hover:text-ink hover:scale-[1.02] active:scale-[0.98]"
                       >
                         <Github className="h-3.5 w-3.5" />
                         GitHub
-                        <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
+                        <ArrowUpRight className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                       </a>
                     )}
                   </div>
@@ -129,18 +167,19 @@ const Projects = () => {
 
                 {projectImages[p.id] && (
                   <div className="flex items-center">
-                    <div className="relative w-full overflow-hidden rounded-2xl border border-edge">
+                    <div className="relative w-full overflow-hidden rounded-2xl border border-edge bg-card-muted/50">
                       <img
                         src={projectImages[p.id]}
                         alt={isZh ? p.nameZh : p.name}
                         loading="lazy"
-                        className="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+                        className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                       />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     </div>
                   </div>
                 )}
               </div>
-            </article>
+            </SpotlightCard>
           </Reveal>
         ))}
       </section>
@@ -151,15 +190,17 @@ const Projects = () => {
           eyebrow={isZh ? '感兴趣方向' : 'Research Interests'}
           title={isZh ? '长期关注的方向' : 'Directions I care about'}
         />
-        <div className="mt-8 divide-y divide-edge overflow-hidden rounded-2xl border border-edge bg-card">
+        <div className="mt-8 divide-y divide-edge overflow-hidden rounded-2xl border border-edge bg-card shadow-sm">
           {directionsData.map((d, i) => (
             <Reveal key={d.id} delay={i * 50}>
-              <div className="group flex items-baseline gap-5 px-6 py-5 transition-colors hover:bg-card-muted sm:px-8">
-                <span className="font-mono text-sm text-indigo-500/70 dark:text-indigo-400/70">
+              <div className="group flex items-baseline gap-5 px-6 py-5 transition-all duration-200 hover:bg-card-muted/60 sm:px-8">
+                <span className="font-mono text-sm font-semibold text-indigo-500/80 dark:text-indigo-400/80">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="min-w-0">
-                  <h3 className="text-[15px] font-semibold text-ink">{isZh ? d.titleZh : d.title}</h3>
+                  <h3 className="text-[15px] font-semibold text-ink transition-colors group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                    {isZh ? d.titleZh : d.title}
+                  </h3>
                   <p className="mt-1 text-sm leading-relaxed text-ink-muted">{isZh ? d.descZh : d.desc}</p>
                 </div>
               </div>
@@ -177,15 +218,18 @@ const Projects = () => {
         <div className="mt-8 space-y-3">
           {papers.map((paper, i) => (
             <Reveal key={i} delay={i * 60}>
-              <div className="flex items-center justify-between gap-4 rounded-2xl border border-edge bg-card px-6 py-5 transition-colors hover:border-edge-strong sm:px-8">
+              <SpotlightCard className="flex items-center justify-between gap-4 px-6 py-5 sm:px-8">
                 <div className="flex min-w-0 items-center gap-4">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card-muted text-ink-faint">
                     <FileText className="h-4 w-4" />
                   </span>
                   <p className="truncate text-[15px] font-medium text-ink">{isZh ? paper.zh : paper.en}</p>
                 </div>
-                <Tag className="shrink-0">{isZh ? '准备中' : 'In progress'}</Tag>
-              </div>
+                <Tag className="shrink-0 border-indigo-500/20 bg-indigo-500/[0.05] text-indigo-500 dark:text-indigo-400">
+                  <Sparkles className="mr-1 h-3 w-3" />
+                  {isZh ? '准备中' : 'In progress'}
+                </Tag>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

@@ -214,11 +214,16 @@ const ProjectCase = () => {
       <Section no="04" title={isZh ? '关键决策' : 'Key decisions'}>
         <div className="grid gap-4 lg:grid-cols-2">
           {study.decisions.map((d, i) => (
-            <div key={i} className="rounded-2xl border border-edge bg-card p-6 transition-colors hover:border-edge-strong sm:p-7">
+            <div
+              key={i}
+              className="group rounded-2xl border border-edge bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-edge-strong hover:shadow-md sm:p-7"
+            >
               <span className="font-mono text-xs font-bold tracking-wider text-indigo-500 dark:text-indigo-400">
                 D{String(i + 1).padStart(2, '0')}
               </span>
-              <p className="mt-3 text-[15px] font-semibold leading-snug text-ink">{isZh ? d.choiceZh : d.choice}</p>
+              <p className="mt-3 text-[15px] font-semibold leading-snug text-ink group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                {isZh ? d.choiceZh : d.choice}
+              </p>
               <p className="mt-3 text-[13px] leading-relaxed text-ink-faint">
                 <span className="mr-1.5 font-medium">{isZh ? '备选：' : 'Instead:'}</span>
                 <span className="line-through decoration-edge-strong">{isZh ? d.altZh : d.alt}</span>
@@ -234,23 +239,43 @@ const ProjectCase = () => {
       {/* --------------------------- 05 Evidence --------------------------- */}
       <Section no="05" title={isZh ? '证据' : 'Evidence'}>
         {terminal && (
-          <div className="overflow-hidden rounded-2xl border border-edge bg-zinc-950 shadow-lg shadow-zinc-950/10">
-            <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3">
-              <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-              <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-              <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-              <span className="ml-2 inline-flex items-center gap-1.5 font-mono text-xs text-zinc-500">
-                <TerminalSquare className="h-3.5 w-3.5" />
-                {terminal.title}
-              </span>
+          <div className="overflow-hidden rounded-2xl border border-edge/80 bg-[#0c0d12] shadow-xl shadow-zinc-950/20">
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 bg-zinc-900/50">
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-rose-500/80 shadow-sm shadow-rose-500/50" />
+                <span className="h-3 w-3 rounded-full bg-amber-500/80 shadow-sm shadow-amber-500/50" />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80 shadow-sm shadow-emerald-500/50" />
+                <span className="ml-2 inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400">
+                  <TerminalSquare className="h-3.5 w-3.5 text-indigo-400" />
+                  {terminal.title}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(terminal.lines.join('\n'));
+                  const btn = document.getElementById('terminal-copy-badge');
+                  if (btn) btn.innerText = isZh ? '已复制' : 'Copied!';
+                  setTimeout(() => {
+                    if (btn) btn.innerText = isZh ? '复制命令' : 'Copy';
+                  }, 2000);
+                }}
+                id="terminal-copy-badge"
+                className="font-mono text-xs text-zinc-400 hover:text-zinc-200 transition-colors px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 border border-white/10"
+              >
+                {isZh ? '复制命令' : 'Copy'}
+              </button>
             </div>
-            <div className="overflow-x-auto p-5">
+            <div className="overflow-x-auto p-5 font-mono text-[13px] leading-loose text-zinc-300">
               {terminal.lines.map((line) => (
-                <p key={line} className="whitespace-pre font-mono text-[12.5px] leading-loose text-zinc-300">
-                  <span className="mr-2 select-none text-emerald-400">$</span>
+                <p key={line} className="whitespace-pre">
+                  <span className="mr-2 select-none text-emerald-400 font-semibold">$</span>
                   {line}
                 </p>
               ))}
+              <p className="mt-1 flex items-center text-emerald-400">
+                <span className="mr-2 select-none font-semibold">$</span>
+                <span className="inline-block h-4 w-2 bg-emerald-400 animate-pulse" />
+              </p>
             </div>
           </div>
         )}
@@ -258,7 +283,7 @@ const ProjectCase = () => {
         {slug === 'docparse' && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {docParseMetrics.map((m) => (
-              <div key={m} className="rounded-2xl border border-edge bg-card p-5 text-center">
+              <div key={m} className="rounded-2xl border border-edge bg-card p-5 text-center shadow-sm transition-all hover:border-edge-strong">
                 <p className="font-mono text-lg font-bold text-ink">{m}</p>
                 <p className="mt-1 text-xs text-ink-faint">{isZh ? '自动化评测指标' : 'Automated metric'}</p>
               </div>
@@ -270,15 +295,16 @@ const ProjectCase = () => {
           <div className={`mt-6 grid gap-5 ${images.length > 1 ? 'sm:grid-cols-2' : 'sm:max-w-md'}`}>
             {images.map((img) => (
               <figure key={img.caption.en} className={img.wide ? 'sm:col-span-2' : ''}>
-                <div className="overflow-hidden rounded-2xl border border-edge bg-card">
+                <div className="overflow-hidden rounded-2xl border border-edge bg-card shadow-sm group">
                   <img
                     src={img.src}
                     alt={isZh ? img.caption.zh : img.caption.en}
                     loading="lazy"
                     className={
-                      img.wide || images!.length === 1
+                      (img.wide || images!.length === 1
                         ? 'max-h-[32rem] w-full object-contain'
-                        : 'aspect-[16/10] w-full object-cover object-top'
+                        : 'aspect-[16/10] w-full object-cover object-top') +
+                      ' transition-transform duration-500 ease-out group-hover:scale-[1.02]'
                     }
                   />
                 </div>

@@ -2,6 +2,7 @@ import { ArrowRight, Camera, GraduationCap, Mail, MapPin, Music2, Trophy, User }
 import personalData from '../data/personal.json';
 import { useLanguage } from '../contexts/language';
 import { Reveal, SectionHeading, Tag } from '../components/ui';
+import SpotlightCard from '../components/SpotlightCard';
 
 const journey = [
   {
@@ -97,29 +98,29 @@ const About = () => {
       </Reveal>
 
       {/* --------------------- Education + info sidebar -------------------- */}
-      <section className="grid gap-4 lg:grid-cols-3">
+      <section className="grid gap-5 lg:grid-cols-3">
         <Reveal className="lg:col-span-2">
-          <div className="h-full rounded-2xl border border-edge bg-card p-7 sm:p-8">
+          <SpotlightCard className="h-full p-7 sm:p-8">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 dark:text-indigo-400">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/10 text-indigo-500 shadow-sm dark:text-indigo-400">
                 <GraduationCap className="h-5 w-5" />
               </span>
-              <h2 className="text-lg font-semibold text-ink">{isZh ? '教育背景' : 'Education'}</h2>
+              <h2 className="text-lg font-bold text-ink">{isZh ? '教育背景' : 'Education'}</h2>
             </div>
 
             <div className="mt-6">
-              <div className="grid gap-4 border-b border-edge pb-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-edge">
+              <div className="grid gap-4 border-b border-edge/60 pb-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-edge/60">
                 {personalData.schools.map((s) => (
                   <div key={s.nameZh} className="sm:px-4 sm:first:pl-0 sm:last:pr-0">
-                    <p className="font-mono text-xs text-ink-faint">{s.period}</p>
-                    <p className="mt-1.5 text-sm font-semibold leading-snug text-ink">{isZh ? s.nameZh : s.name}</p>
+                    <p className="font-mono text-xs text-indigo-500 dark:text-indigo-400 font-semibold">{s.period}</p>
+                    <p className="mt-1.5 text-sm font-bold leading-snug text-ink">{isZh ? s.nameZh : s.name}</p>
                     <p className="mt-0.5 text-xs text-ink-faint">{isZh ? s.stageZh : s.stage}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-xl font-semibold tracking-tight text-ink">
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-xl font-bold tracking-tight text-ink">
                   {isZh ? personalData.education.universityZh : personalData.education.university}
                 </h3>
                 <span className="rounded-full bg-card-muted px-3 py-1 font-mono text-xs text-ink-muted">
@@ -134,7 +135,7 @@ const About = () => {
                 {isZh ? personalData.education.degreeZh : personalData.education.degree}
               </p>
 
-              <div className="mt-6 border-t border-edge pt-5">
+              <div className="mt-6 border-t border-edge/60 pt-5">
                 <p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-ink-faint">
                   {isZh ? '主修课程' : 'Major courses'}
                 </p>
@@ -145,38 +146,38 @@ const About = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </SpotlightCard>
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="h-full rounded-2xl border border-edge bg-card p-7 sm:p-8">
+          <SpotlightCard className="h-full p-7 sm:p-8">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500 dark:text-violet-400">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500 shadow-sm dark:text-violet-400">
                 <User className="h-5 w-5" />
               </span>
-              <h2 className="text-lg font-semibold text-ink">{isZh ? '个人信息' : 'Profile'}</h2>
+              <h2 className="text-lg font-bold text-ink">{isZh ? '个人信息' : 'Profile'}</h2>
             </div>
 
             <dl className="mt-6 space-y-5">
               <div>
-                <dt className="text-xs text-ink-faint">{isZh ? '姓名' : 'Name'}</dt>
-                <dd className="mt-1 text-[15px] font-medium text-ink">
+                <dt className="text-xs font-semibold text-ink-faint uppercase tracking-wider">{isZh ? '姓名' : 'Name'}</dt>
+                <dd className="mt-1 text-[15px] font-semibold text-ink">
                   {personalData.name} · {personalData.nameZh}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-ink-faint">{isZh ? '身份' : 'Role'}</dt>
+                <dt className="text-xs font-semibold text-ink-faint uppercase tracking-wider">{isZh ? '身份' : 'Role'}</dt>
                 <dd className="mt-1 text-[15px] font-medium text-ink">{isZh ? personalData.titleZh : personalData.title}</dd>
               </div>
               <div>
-                <dt className="text-xs text-ink-faint">{isZh ? '地点' : 'Location'}</dt>
+                <dt className="text-xs font-semibold text-ink-faint uppercase tracking-wider">{isZh ? '地点' : 'Location'}</dt>
                 <dd className="mt-1 inline-flex items-center gap-1.5 text-[15px] font-medium text-ink">
-                  <MapPin className="h-3.5 w-3.5 text-ink-faint" />
+                  <MapPin className="h-3.5 w-3.5 text-indigo-500" />
                   {isZh ? '中国 湖北 武汉' : 'Wuhan, China'}
                 </dd>
               </div>
               <div>
-                <dt className="text-xs text-ink-faint">Email</dt>
+                <dt className="text-xs font-semibold text-ink-faint uppercase tracking-wider">Email</dt>
                 <dd className="mt-1">
                   <a
                     href={`mailto:${personalData.contact.email}`}
@@ -188,7 +189,7 @@ const About = () => {
                 </dd>
               </div>
             </dl>
-          </div>
+          </SpotlightCard>
         </Reveal>
       </section>
 
@@ -199,14 +200,14 @@ const About = () => {
           title={isZh ? '方向是怎么长出来的' : 'How the direction took shape'}
         />
         <Reveal className="mt-8">
-          <div className="rounded-3xl border border-edge bg-card p-7 sm:p-9">
+          <SpotlightCard className="p-7 sm:p-9 rounded-3xl">
             <ol className="space-y-7">
               {journey.map((j) => (
                 <li key={j.year} className="flex gap-6">
                   <span className="w-12 shrink-0 pt-0.5 font-mono text-sm font-bold text-indigo-500 dark:text-indigo-400">
                     {j.year}
                   </span>
-                  <ul className="space-y-1.5 border-l border-edge pl-5">
+                  <ul className="space-y-2 border-l-2 border-indigo-500/20 pl-5">
                     {(isZh ? j.linesZh : j.lines).map((line) => (
                       <li key={line} className="text-sm leading-relaxed text-ink-muted">
                         {line}
@@ -217,16 +218,16 @@ const About = () => {
               ))}
             </ol>
 
-            <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-edge pt-6">
+            <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-edge/60 pt-6">
               {(isZh ? chainZh : chainEn).map((c, i) => (
                 <span key={c} className="flex items-center gap-2">
                   {i > 0 && <ArrowRight className="h-3.5 w-3.5 text-edge-strong" />}
                   <span
                     className={
-                      'rounded-full px-3 py-1 text-xs font-medium ' +
+                      'rounded-full px-3 py-1 text-xs font-medium transition-colors ' +
                       (i === (isZh ? chainZh : chainEn).length - 1
-                        ? 'bg-gradient-to-r from-indigo-500/15 to-violet-500/15 text-indigo-600 ring-1 ring-inset ring-indigo-500/25 dark:text-indigo-300'
-                        : 'bg-card-muted text-ink-muted')
+                        ? 'bg-gradient-to-r from-indigo-500/15 to-violet-500/15 text-indigo-600 ring-1 ring-inset ring-indigo-500/25 dark:text-indigo-300 font-semibold'
+                        : 'bg-card-muted text-ink-muted hover:text-ink')
                     }
                   >
                     {c}
@@ -234,7 +235,7 @@ const About = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </SpotlightCard>
         </Reveal>
       </section>
 
@@ -247,8 +248,8 @@ const About = () => {
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {hobbies.map((h, i) => (
             <Reveal key={h.title} delay={i * 70}>
-              <div className="h-full rounded-2xl border border-edge bg-card p-6 transition-colors hover:border-edge-strong">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-card-muted text-ink-muted">
+              <SpotlightCard className="group h-full p-6 transition-all duration-300 hover:-translate-y-1">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-card-muted text-ink-muted transition-transform duration-300 group-hover:scale-110 group-hover:bg-indigo-500/10 group-hover:text-indigo-500">
                   {h.icon}
                 </span>
                 <h3 className="mt-4 text-[15px] font-semibold text-ink">{h.title}</h3>
@@ -266,7 +267,7 @@ const About = () => {
                       : isZh ? '随拍记录生活。' : 'Capturing everyday moments.'}
                   </p>
                 )}
-              </div>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>
